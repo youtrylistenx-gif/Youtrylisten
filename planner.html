@@ -1,0 +1,1049 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>มึงลองฟัง.❤️‍🔥 — Planner</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  
+  <style>
+    /* ── RESET STYLE ── */
+    *, *::before, *::after { 
+      box-sizing: border-box; 
+      margin: 0; 
+      padding: 0; 
+    }
+    
+    body { 
+      font-family: "Prompt", Arial, sans-serif; 
+      font-size: 16px; 
+      color: #202124; 
+      background: #fff; 
+    }
+ 
+    /* ── LIVE USERS POPUP (POSITIONED TOP CENTER) ── */
+    #live-users-popup { 
+      position: fixed; 
+      top: 80px; 
+      left: 50%; 
+      transform: translateX(-50%); 
+      background: #ffffff; 
+      padding: 8px 16px; 
+      border-radius: 20px; 
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15); 
+      border: 1px solid #e0e0e0;
+      z-index: 9999;
+      font-size: 0.8rem;
+      display: none;
+      white-space: nowrap;
+    }
+
+    /* ── NAV ── */
+    .gs-nav {
+      height: 64px;
+      background: #fff;
+      border-bottom: 1px solid #e0e0e0;
+      display: flex;
+      align-items: center;
+      padding: 0 24px;
+      gap: 12px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    }
+    .gs-nav-logo {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+      text-decoration: none;
+      color: #202124;
+    }
+    
+    .gs-nav-logo .logo-img {
+      height: 32px;
+      width: 32px;
+      object-fit: contain;
+    }
+
+    .logo-name {
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: #202124;
+      white-space: nowrap;
+    }
+  
+
+    .logo-placeholder { 
+      height: 32px; 
+      width: 32px; 
+      border-radius: 4px; 
+      background: #f1f3f4; 
+      display: flex; 
+      align-items: center; 
+      justify-content: center; 
+      font-size: 1.1rem; 
+    }
+    
+    .gs-nav-links { 
+      margin-left: 8px; 
+      display: flex; 
+      align-items: center; 
+    }
+    
+    .gs-nav-links a { 
+      text-decoration: none; 
+      color: #202124; 
+      font-size: 0.9rem; 
+      padding: 0 16px; 
+      height: 64px; 
+      display: flex; 
+      align-items: center; 
+      border-bottom: 3px solid transparent; 
+      transition: border-color 0.15s; 
+    }
+    
+    .gs-nav-links a:hover, 
+    .gs-nav-links a.active { 
+      border-bottom-color: #1a73e8; 
+      color: #1a73e8; 
+    }
+    
+    .btn-back {
+      margin-left: auto;
+      display: flex; 
+      align-items: center; 
+      gap: 6px; 
+      text-decoration: none; 
+      color: #5f6368; 
+      font-size: 0.88rem; 
+      padding: 7px 14px; 
+      border: 1px solid #e0e0e0; 
+      border-radius: 20px; 
+      transition: background 0.15s, color 0.15s; 
+      white-space: nowrap; 
+    }
+    
+    .btn-back:hover { 
+      background: #f1f3f4; 
+      color: #202124; 
+    }
+ 
+    /* ── PAGE LAYOUT ── */
+    .gs-page {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 24px 24px 110px;
+    }
+    
+    .inner { 
+      padding: 0; 
+    }
+ 
+    /* ── HERO VIDEO ── */
+    .hero-video-wrap {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: #000;
+      margin-top: 20px;
+      margin-bottom: 0;
+    }
+    
+    .hero-video-wrap iframe {
+      width: 100%;
+      height: 100%;
+      border: 0;
+      display: block;
+    }
+
+    @media (max-width: 600px) {
+      .hero-video-wrap {
+        width: 100%;
+        aspect-ratio: 16 / 16; 
+        background: #000;
+        margin-top: 15px; 
+        margin-bottom: 0;
+        overflow: hidden;
+      }
+      .hero-video-wrap iframe {
+        width: 100%;
+        height: 100%;
+        border: 0;
+        display: block;
+        object-fit: cover; 
+      }
+    }
+
+    /* ── กล่องหลักให้มีความกว้างเท่ากันทั้งหมด ── */
+    .collapse-section, .summary-box, .price-section {
+      width: 100%;
+      max-width: 100%;
+      margin-left: auto;
+      margin-right: auto;
+      margin-bottom: 20px;
+    }
+
+    /* ── CAROUSEL SECTION ── */
+    /* หัวข้อใหม่เหนือจุดสไลด์ */
+    #carousel-indicator-title {
+      text-align: center;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #202124;
+      margin-top: 20px;
+      margin-bottom: 5px;
+    }
+    #carousel-indicator-title span {
+      color: #ea4335;
+    }
+ 
+    .carousel-wrap { 
+      position: relative; 
+      margin-bottom: 8px; 
+      width: 100%;
+      max-width: 100%;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    
+    .carousel-viewport { 
+      overflow: hidden; 
+      border-radius: 12px; 
+      border: 1px solid #e8eaed; 
+    }
+    
+    .carousel-track { 
+      display: flex; 
+      transition: transform 0.4s cubic-bezier(.4,0,.2,1); 
+    }
+    
+    .carousel-slide { 
+      min-width: 100%; 
+      display: flex; 
+      flex-direction: column; 
+      background: #fff; 
+    }
+    
+    .slide-img { 
+      width: 100%; 
+      background: #f1f3f4; 
+    }
+    
+    .slide-img img { 
+      width: 100%; 
+      height: auto; 
+      display: block; 
+    }
+    
+    .slide-body { 
+      padding: 18px 20px 22px; 
+      display: flex; 
+      flex-direction: column; 
+      gap: 6px; 
+    }
+
+    .slide-title { 
+      font-size: 1rem; 
+      font-weight: 700; 
+      color: #202124; 
+      line-height: 1.4; 
+    }
+    
+    .slide-desc { 
+      font-size: 0.9rem; 
+      color: #3c4043; 
+      line-height: 1.65; 
+    }
+    
+    .slide-value { 
+      display: inline-block; 
+      margin-top: 4px; 
+      font-size: 0.8rem; 
+      background: #fff3e0; 
+      color: #e65100; 
+      padding: 2px 10px; 
+      border-radius: 20px; 
+      font-weight: 600; 
+      align-self: flex-start; 
+    }
+    
+    .carousel-btn { 
+      position: absolute; 
+      top: 35%; 
+      transform: translateY(-50%); 
+      width: 38px; 
+      height: 38px; 
+      border-radius: 50%; 
+      background: #ea4335; 
+      border: none; 
+      box-shadow: 0 3px 10px rgba(0,0,0,0.25); 
+      display: flex; 
+      align-items: center; 
+      justify-content: center; 
+      cursor: pointer; 
+      z-index: 10; 
+      font-size: 1rem; 
+      font-weight: 700; 
+      color: #fff; 
+      transition: background 0.15s, transform 0.15s; 
+      user-select: none; 
+    }
+    
+    .carousel-btn:hover { 
+      background: #c0392b; 
+      transform: translateY(-50%) scale(1.1); 
+    }
+    
+    .carousel-btn-prev { left: 10px; }
+    .carousel-btn-next { right: 10px; }
+    
+    .carousel-dots { 
+      display: flex; 
+      justify-content: center; 
+      gap: 7px; 
+      margin: 5px 0 24px; 
+    }
+    
+    .carousel-dot { 
+      width: 7px; 
+      height: 7px; 
+      border-radius: 50%; 
+      background: #dadce0; 
+      cursor: pointer; 
+      transition: background 0.2s, transform 0.2s; 
+    }
+    
+    .carousel-dot.active { 
+      background: #ea4335; 
+      transform: scale(1.35); 
+    }
+ 
+    /* ── PRICE SECTION ── */
+    .price-section { 
+      background: #fff; 
+      border: 1px solid #e8eaed; 
+      border-radius: 12px; 
+      padding: 20px; 
+    }
+    
+    .price-row { 
+      display: flex; 
+      align-items: baseline; 
+      gap: 12px; 
+      margin-bottom: 10px; 
+      flex-wrap: wrap; 
+    }
+    
+    .price-discount { 
+      font-size: 0.9rem; 
+      font-weight: 700; 
+      background: #ea4335; 
+      color: #fff; 
+      padding: 3px 10px; 
+      border-radius: 4px; 
+    }
+    
+    .price-new { 
+      font-size: 1.8rem; 
+      font-weight: 800; 
+      color: #202124; 
+    }
+    
+    .price-old { 
+      font-size: 1rem; 
+      color: #9aa0a6; 
+      text-decoration: line-through; 
+    }
+    
+    .flash-sale-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: #fff1f0;
+      color: #d32f2f;
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      border: 1px solid #ffcdd2;
+    }
+    
+    .product-title { 
+      font-size: 0.92rem; 
+      font-weight: 500; 
+      color: #5f6368; 
+      line-height: 1.5; 
+      margin-bottom: 10px; 
+    }
+    
+    .stats-row { 
+      display: flex; 
+      align-items: center; 
+      gap: 8px; 
+      font-size: 0.88rem; 
+      color: #5f6368; 
+      flex-wrap: wrap; 
+    }
+    
+    .live-dot { 
+      display: inline-block; 
+      width: 9px; 
+      height: 9px; 
+      border-radius: 50%; 
+      background: #34a853; 
+      position: relative; 
+      flex-shrink: 0; 
+    }
+    
+    .live-dot::after { 
+      content: ""; 
+      position: absolute; 
+      inset: -3px; 
+      border-radius: 50%; 
+      background: #34a853; 
+      opacity: 0.4; 
+      animation: pulse 1.6s ease-out infinite; 
+    }
+    
+    @keyframes pulse { 
+      0% { transform: scale(1); opacity: .5; } 
+      70% { transform: scale(2); opacity: 0; } 
+      100% { transform: scale(2.2); opacity: 0; } 
+    }
+ 
+    /* ── CALL TO ACTION BUTTON ── */
+    .btn-main { 
+      display: block; 
+      background: linear-gradient(135deg, #f44336 0%, #b71c1c 100%); 
+      color: #fff; 
+      font-family: inherit; 
+      border-radius: 12px; 
+      text-decoration: none; 
+      border: none; 
+      cursor: pointer; 
+      margin-bottom: 28px; 
+      text-align: center; 
+      box-shadow: 0 4px 16px rgba(234,67,53,0.4); 
+      overflow: hidden; 
+      padding: 0; 
+      animation: ctaScale 2.4s ease-in-out infinite;
+      width: 100%;
+      max-width: 100%;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    
+    .btn-main:hover { 
+      transform: scale(1.04); 
+      box-shadow: 0 8px 24px rgba(234,67,53,0.55); 
+      transition: transform 0.2s ease;
+      animation: none; 
+    }
+    
+    .btn-main-top {
+      display: block;
+      padding: 16px 24px 5px;
+      font-size: 1.1rem;
+      font-weight: 800;
+      letter-spacing: 0.01em;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.25);
+    }
+    
+    .btn-main-sub {
+      display: block;
+      padding: 0 24px 14px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: rgba(255,255,255,0.92);
+      text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+    }
+    
+    @keyframes ctaScale {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.025); }
+    }
+ 
+    /* ── 4. SUMMARY BOX ── */
+    .summary-box { 
+      background: #fffbf0; 
+      border: 1px solid #ffe082; 
+      border-radius: 12px; 
+      padding: 22px 22px 18px; 
+    }
+    
+    .summary-title { 
+      font-size: 1.05rem; 
+      font-weight: 800; 
+      color: #ea4335; 
+      text-align: center; 
+      margin-bottom: 16px; 
+      line-height: 1.5; 
+    }
+    
+    .summary-body { 
+      font-size: 0.92rem; 
+      color: #202124; 
+      line-height: 1.8; 
+      margin-bottom: 10px; 
+    }
+    
+    .summary-link { 
+      color: #ea4335; 
+      font-weight: 700; 
+      text-decoration: none; 
+    }
+    
+    .summary-link:hover { 
+      text-decoration: underline; 
+    }
+ 
+    hr { 
+      border: none; 
+      border-top: 1px solid #e8eaed; 
+      margin: 4px auto 16px; 
+      width: 100%;
+      max-width: 100%;
+    }
+ 
+    /* ── 5-6. COLLAPSIBLE ACCORDION ── */
+    .collapse-section { 
+      border: 1px solid #e8eaed; 
+      border-radius: 12px; 
+      overflow: hidden; 
+    }
+    
+    .collapse-toggle { 
+      width: 100%; 
+      background: #f8f9fa; 
+      border: none; 
+      padding: 16px 20px; 
+      display: flex; 
+      align-items: center; 
+      justify-content: space-between; 
+      cursor: pointer; 
+      font-family: inherit; 
+      font-size: 0.95rem; 
+      font-weight: 600; 
+      color: #202124; 
+      text-align: left; 
+      transition: background 0.15s; 
+    }
+    
+    .collapse-toggle:hover { 
+      background: #f1f3f4; 
+    }
+    
+    .collapse-arrow { 
+      font-size: 0.75rem; 
+      transition: transform 0.3s; 
+      flex-shrink: 0; 
+      margin-left: 12px; 
+    }
+    
+    .collapse-toggle.open .collapse-arrow { 
+      transform: rotate(180deg); 
+    }
+    
+    .collapse-body { 
+      max-height: 0; 
+      overflow: hidden; 
+      transition: max-height 0.4s ease; 
+    }
+    
+    .collapse-body.open { 
+      max-height: 2000px; 
+    }
+    
+    .collapse-inner { 
+      padding: 18px 20px 22px; 
+      font-size: 0.9rem; 
+      line-height: 1.8; 
+      color: #202124; 
+      white-space: pre-wrap; 
+    }
+ 
+    /* ── 7. REVIEWS MASONRY ── */
+    .reviews-section { 
+      margin-top: 8px; 
+      width: 100%;
+      max-width: 100%;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    
+    .review-heading { 
+      font-size: 1.1rem; 
+      font-weight: 700; 
+      text-align: center; 
+      margin-bottom: 4px; 
+      color: #202124; 
+    }
+    
+    .review-stars { 
+      text-align: center; 
+      font-size: 0.95rem; 
+      color: #f59e0b; 
+      margin-bottom: 24px; 
+    }
+    
+    .review-masonry { 
+      column-count: 3; 
+      column-gap: 12px; 
+      width: 100%;
+      max-width: 100%;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    
+    .review-item { 
+      background: #fff; 
+      border: 1px solid #e8eaed;
+      border-radius: 10px; 
+      margin-bottom: 12px; 
+      overflow: hidden; 
+      display: inline-block; 
+      width: 100%;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+      transition: transform 0.2s ease;
+    }
+    
+    .review-item:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
+    
+    .review-item img { 
+      width: 100%; 
+      height: auto; 
+      display: block; 
+    }
+ 
+    /* ── FOOTER ── */
+    .gs-footer { 
+      border-top: 1px solid #e0e0e0; 
+      text-align: center; 
+      padding: 18px 24px; 
+      font-size: 0.8rem; 
+      color: #5f6368; 
+      margin-top: 32px; 
+    }
+ 
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      .review-masonry { column-count: 2; column-gap: 10px; }
+      .review-item { margin-bottom: 10px; }
+    }
+    
+    @media (max-width: 480px) {
+      .review-masonry { column-count: 2; column-gap: 8px; }
+      .review-item { margin-bottom: 8px; border-radius: 8px; }
+    }
+
+    /* ── FLOATING CTA BAR (TikTok style) ── */
+    #float-cta-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background: #fff;
+      border-top: 1px solid #e0e0e0;
+      box-shadow: 0 -4px 20px rgba(0,0,0,0.13);
+      z-index: 9000;
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      safe-area-inset-bottom: env(safe-area-inset-bottom);
+      padding-bottom: calc(10px + env(safe-area-inset-bottom));
+    }
+    .float-price {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      min-width: 0;
+    }
+    .float-price-new {
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: #d32f2f;
+      line-height: 1.2;
+    }
+    .float-price-old {
+      font-size: 0.78rem;
+      color: #9aa0a6;
+      text-decoration: line-through;
+    }
+    .float-btn {
+      display: block;
+      background: linear-gradient(135deg, #f44336 0%, #b71c1c 100%);
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      padding: 13px 22px;
+      font-family: inherit;
+      font-size: 1rem;
+      font-weight: 800;
+      cursor: pointer;
+      text-decoration: none;
+      text-align: center;
+      white-space: nowrap;
+      box-shadow: 0 4px 14px rgba(234,67,53,0.45);
+      animation: ctaScale 2.4s ease-in-out infinite;
+      flex-shrink: 0;
+    }
+    .float-btn:hover {
+      transform: scale(1.04);
+      box-shadow: 0 8px 22px rgba(234,67,53,0.55);
+      animation: none;
+    }
+  </style>
+</head>
+<body>
+
+<div id="live-users-popup">👁️ มีคนกำลังดูหน้านี้อยู่ <strong id="user-count">20</strong> คน</div>
+ 
+<nav class="gs-nav">
+  <a class="gs-nav-logo" href="index.html">
+    <img src="./ภาพ/โลโก้หมากรุก พื้นหลังสีดำ.jpg" alt="Logo" class="logo-img">
+    <span class="logo-name">มึงลองฟัง.❤️‍🔥</span>
+  </a>
+
+  <div class="gs-nav-links">
+    <a href="planner.html" class="active">Planner</a>
+  </div>
+  
+  <a href="index.html" class="btn-back">← ย้อนกลับ</a>
+</nav>
+
+<div class="gs-page">
+ 
+  <div class="hero-video-wrap">
+    <iframe
+      src="https://www.youtube.com/embed/Ug5mcuSeaCM?rel=0&modestbranding=1&playsinline=1"
+      title="Planner Demo"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowfullscreen>
+    </iframe>
+</div> 
+
+  <div class="inner">
+
+    <div class="collapse-section" style="margin-top: 20px;">
+      <button class="collapse-toggle" id="storyToggle">
+        <span>เรื่องราวที่ทำให้ผมมาสร้างและใช้งาน Planner นี้ จนเปลี่ยนแปลงตัวเองได้จริง 📝</span>
+        <span class="collapse-arrow">▼</span>
+      </button>
+      <div class="collapse-body" id="storyBody">
+        <div class="collapse-inner">เชื่อมั้ยครับ แค่การได้เห็น "ความก้าวหน้าของตัวเอง" ไม่ว่าจะเล็กน้อยแค่ไหนก็ตาม มันสร้างความรู้สึกดีที่ช่วยให้เราอยากลุยกับเป้าหมายของเราได้มากจริงๆ ครับ
+.
+ช่วงแรกที่เริ่มทำช่อง ผมเคยเป็นคนที่พยายามบ้ากับเป้าหมายและเคร่งวินัยสุดๆ แต่ก็ทำได้บ้างไม่ได้บ้าง ผมมกจบวันด้วยความรู้สึกผิดกับตัวเอง ที่ทำสิ่งที่ตั้งใจไว้ในวันนั้นไม่ได้ จนกระทั่งวันนึง จู่ๆ ผมก็ทิ้งทุกอย่าง เพราะรู้สึกเหนื่อยล้ามากๆ อย่างบอกไม่ถูก
+.
+วันนั้นผมนั่งทบทวนกับตัวเองว่าสาเหตุคืออะไร จนกระทั่งผมได้ค้นพบว่า ผมไม่ได้หมดไฟ ขี้เกียจ หรือขาดวินัย "ผมแค่มีชีวิตที่ยุ่งเหยิงไร้แบบแผนเกิน เอาแต่ทำ แต่ไม่เคยจัดระเบียบชีวิต และมองไม่เห็นความก้าวหน้าของตัวเองเลย"
+.
+เพราะการแค่ทำ แต่ไม่รู้ว่าตัวเองก้าวไปได้ไกลแค่ไหนแล้ว มันทำให้ผมรู้สึกเหมือนย่ำอยู่กับที่และเหนื่อยฟรี ผมเลยทุ่มเวลาเรียนรู้เขียนสตร Excel ที่โคตรจะปวดหัวเลยครับ555 มันสุดๆ จริงๆ ผมเสียเวลาไปเกือบ 1 ปีในการสร้าง Plnner ตัวนี้ขึ้นมาใช้งานเอง เพื่อคอยช่วยวางแผน, ติดตามเป้าหมายและวินัยของผม
+.
+แต่มันก็คุ้มค่ามากๆ จริงๆ ครับ พอผมได้ลองเิร่มใช้ และเริ่มเห็นว่าทุกๆ วัน ผมเข้าใกล้สิ่งเป้าหมายมากขึ้นแค่ไหน แต่ละวันมีวินัยได้จริงมั้ย จัดการเวลาชีวิตจนมีเวลาว่างเยอะขึ้นมากๆ มันสร้างความรู้สึกดีและความภูมิใจในตัวเอง ผมสนุกกับมัน ต่างกับเมื่อก่อนมากๆ ที่ผมแค่ทำมันทุกวัน แต่ไม่มีแบบแผน ไม่เห็นความก้าวหน้า แต่ตอนนี้ผมสามารถทำสิ่งเหล่านี้ได้ทุกวันจริงๆ ครับ เพราะผมมีสิ่งที่คอยบอกผมว่า ยิ่งผมไม่หยุด ผมก็ยิ่งเข้าใกล้เป้าหมายได้ไวขึ้นเรื่อยๆ
+.
+ลองนึกภาพว่าเป็นคุณสิครับ ถ้าคุณได้เห็นว่าตัวเองเข้าใกล้สิ่งที่ต้องการมากขึ้นทุกครั้งที่ลงมือทำในทุกวัน และคุณสนุกกับมันด้วย คุณจะอยากหยุดมั้ยครับ ผมเดาว่าคุณก็คงตอบว่าไม่ยากหยุดแน่ๆ และคุณคงจะยิ่งอยากไปให้ถึงมันให้ได้ไวที่สุดใช่มั้ยครับ
+.
+และนี่คือจุดเริ่มต้นของวินัยและไฟที่แท้จริง จากประสบการณ์ตรงจากเรื่องราวของผมเองครับ💪❤️‍🔥
+.
+ปัจจุบันนี้ผมใช้เวลาแค่วันละ 1-2 นาทีก่อนนอนหรือตอนเช้า เข้าไปลิสต์สิ่งที่ต้องทำในวันนี้และอนาคต ช่วยให้ชีวิตมีแบบแผนชัดเจน จบวันก็เข้ามาติ๊กสิ่งที่ทำได้ ทำให้ผมรู้สึกชนะ รู้สึกดีตอนที่เห็นพัฒนาการเติบโตของตัวเองผ่านกราฟและตัวเลขที่ไม่โกหก และเพราะแบบนี้ ผมเลยสนุกจนทำสิ่งเหล่านี้ต่อเนื่องได้ทุกวันครับ🥰📈📊</div>
+      </div>
+    </div>
+ 
+    <div id="carousel-indicator-title">สิ่งที่จะได้รับทั้งหมด <span id="current-slide-num">1</span> จาก <span>8</span></div>
+    <div class="carousel-dots" id="carouselDots"></div>
+    
+    <div class="carousel-wrap">
+      <div class="carousel-viewport">
+        <div class="carousel-track" id="carouselTrack">
+          
+          <div class="carousel-slide">
+            <div class="slide-img"><img src="./ภาพ/AP Slide 1.png" alt="Slide 1" loading="lazy"></div>
+            <div class="slide-body">
+              <div class="slide-title">📲 — ระบบที่ใช้งานได้ตลอดชีวิตและทุกอุปกรณ์ (ข้อมูลเชื่อมกันหมด)</div>
+              <div class="slide-desc">ระบบทุกอย่างที่ผมโชว์ในคลิปนั้น เป็นเทมเพลตสำเร็จรูปที่ใช้งานผ่าน google sheet ได้ง่ายๆ ทั้งคอม ,มือถือ , IPAD ผมเซ็ตสูตรและตั้งค่าทุกอย่างไว้ให้หมดแล้วครับ (ไม่ต้องเสียเวลาฝึกหรือนั่งปวดแก้สูตร Excel เป็นปีๆ อะไรเพิ่มแบบผม)  แค่กรอกข้อมูลงาน แพรน เป้าหมาย และวินัยของตัวเอง แล้วคลิกติ๊กง่ายๆ กราฟมันจะรันของมันเองได้เลยครับ สามารถปรับใช้ในแบบของตัวเอง และใช้งานได้ทันทีเลยครับ🥰📊📈</div>
+            </div>
+          </div>
+          
+          <div class="carousel-slide">
+            <div class="slide-img"><img src="./ภาพ/P Slide 2.png" alt="Slide 2" loading="lazy"></div>
+            <div class="slide-body">
+              <div class="slide-title">📈 Planner — ระบบวางแผนงาน กิจวัตรประจำวัน และเป้าหมายหลัก</div>
+              <div class="slide-desc">จากชีวิตที่ยุ่งเหยิง จบวันด้วยความรู้สึกผิด กลายเป็นชีวิตที่มีระเบียบแบบแผน ได้เวลาว่างในชีวิตกลับมา มีกราฟคอยติดตามความคืบหน้าของทุกเรื่องแบบ Real Time (เวลาที่เห็นชีวิตเรามีแผน มีกราฟที่ว่างานและเป้าหมายของเราใกล้จะสำเร็จมากขึ้นเรื่อยๆ มันทำให้รู้สึกดีมากๆ เลยครับ☺️)</div>
+              <span class="slide-value" style="background:#ea4335;color:#fff;font-size:0.85rem;padding:4px 14px;">💰 ราคาปกติ ฿590.-</span>
+            </div>
+          </div>
+          
+          <div class="carousel-slide">
+            <div class="slide-img"><img src="./ภาพ/H Slide 3.png" alt="Slide 3" loading="lazy"></div>
+            <div class="slide-body">
+              <div class="slide-title">✅ Habit Tracker — ระบบสร้างและติดตามวินัย</div>
+              <div class="slide-desc">เมื่อก่อนผมคิดว่าตัวเองขี้เกียจและขาดวินัย แต่ความจริงคือผมแค่มองไม่เห็นความก้าวหน้าของตัวเองจนรู้สึกเหมือนย่ำอยู่กับที่และเหนื่อยฟรีครับ กราฟในระบบ Habit Tracker นี้ผมเลยทำมาเพื่อพิสูจน์ให้คุณเห็นความต่อเนื่องของตัวเองในทุกๆ วัน พอเราได้เห็นหลักฐานว่าตัวเองเก่งและมีวินัยขึ้นเรื่อยๆ ความรู้สึกดี ความภูมิใจมันจะกลายเป็นไฟที่ทำให้เราอยากลุยต่อแบบไม่มีวันหยุดครับ และนี่คือจุดเริ่มต้นของการมีวินัยที่แท้จริงครับ 💪❤️‍🔥</div>
+              <span class="slide-value" style="background:#e8f5e9;color:#2e7d32;font-weight:700;">🎁 โบนัสพิเศษ</span>
+            </div>
+          </div>
+          
+          <div class="carousel-slide">
+            <div class="slide-img"><img src="./ภาพ/M Slide 4.png" alt="Slide 4" loading="lazy"></div>
+            <div class="slide-body">
+              <div class="slide-title">💰 Money Tracker — ระบบบริหารเงิน</div>
+              <div class="slide-desc">ช่วงที่ผมเริ่มมีรายได้และมีเงินก้อนนึงเข้ามา มันทำให้ผมรู้ทันทีว่าถ้าไม่มีระบบบริหารเงินที่ดี สุดท้ายชีวิตผมคงกลับไปคอยเครียดกับเรื่องเงินเหมือนเดิม ระบบ Money Tracker นี้ผมเลยพึ่งทำเพิ่มขึ้นมาเสริม เพื่อช่วยบริหารการเงินของทุกคนในหน้าเดียว เห็นเงินที่เข้ามา เห็นเงินที่ออกไป เห็นเงินที่เหลือ และเห็นสิ่งที่ทำให้การเงินเราพัง พอเรามีตัวช่วยคอยเตือน ก็จะสบายใจและพร้อมเติบโตได้อย่างมั่นใจพร้อมกับเรื่องอื่นๆ ด้วยครับ 💵✨</div>
+              <span class="slide-value" style="background:#e8f5e9;color:#2e7d32;font-weight:700;">🎁 โบนัสพิเศษ</span>
+            </div>
+          </div>
+          
+          <div class="carousel-slide">
+            <div class="slide-img"><img src="./ภาพ/Y Slide5.png" alt="Slide 5" loading="lazy"></div>
+            <div class="slide-body">
+              <div class="slide-title">📊 สรุปรายปี — เห็นพัฒนาการทุกเรื่องของทั้งปีในหน้าเดียว</div>
+              <div class="slide-desc">หน้าสรุปภาพรวมทั้งปี รวมทุกด้านไว้ในที่เดียว ทั้งเป้าหมาย วินัย และการเงิน เพื่อให้เเห็นว่าปีนี้เราเติบโตไปแค่ไหน ทบทวนและวางแผนปีหน้าได้ดียิ่งขึ้นอีกครับ🥰</div>
+              <span class="slide-value" style="background:#e8f5e9;color:#2e7d32;font-weight:700;">🎁 โบนัสพิเศษ</span>
+            </div>
+          </div>
+          
+          <div class="carousel-slide">
+            <div class="slide-img"><img src="./ภาพ/V Slide 6.png" alt="Slide 6" loading="lazy"></div>
+            <div class="slide-body">
+              <div class="slide-title">🎬 วิดีโอสอนวิธีใช้งานสั้นๆ 6 นาที</div>
+              <div class="slide-desc">ไม่ต้องกลัวว่าจะใช้ไม่เป็นนะครับ ผมมีวิดีโอสั้นๆ ครอบคลุมทุกอย่างที่ต้องรู้ เปิดดูครั้งเดียวพร้อมใช้ได้เลย ไม่ต้องกังวลว่าจะใช้ยาก ต้องมานั่งปวดหัว หรือต้องมีความรู้เรื่องมาก่อนครับ🥰</div>
+              <span class="slide-value" style="background:#e8f5e9;color:#2e7d32;font-weight:700;">🎁 โบนัสพิเศษ</span>
+            </div>
+          </div>
+          
+          <div class="carousel-slide">
+            <div class="slide-img"><img src="./ภาพ/U Slide 7.png" alt="Slide 7" loading="lazy"></div>
+            <div class="slide-body">
+              <div class="slide-title">🔄 อัปเดตฟรีตลอดชีพ — ได้ทุกระบบใหม่โดยที่ไม่ต้องเสียเงินเพิ่มแม้แต่บาทเดียว</div>
+              <div class="slide-desc">ผมตั้งใจทำระบบนี้ให้ดีที่สุด และจะคอยปรับปรุงรายละเอียดเล็กๆ น้อยๆ ให้ใช้งานง่ายขึ้นอยู่เสมอตามฟีดแบ็กของทุกคนครับ หลังจากนี้หากมีการอัปเดตเวอร์ชั่นใหม่ที่สมบูรณ์ขึ้นหรือมีระบบอะไรที่เพิ่มมาอีก ผมจะส่งไฟล์ใหม่ให้ทุกคนใช้ฟรีตลอดไป ผมถือว่าเราลุยไปด้วยกัน ผมดูแลเต็มที่แน่นอนครับ 🫡</div>
+              <span class="slide-value" style="background:#e8f5e9;color:#2e7d32;font-weight:700;">🎁 โบนัสพิเศษ</span>
+            </div>
+          </div>
+          
+          <div class="carousel-slide">
+            <div class="slide-img"><img src="./ภาพ/C Slide 8.png" alt="Slide 8" loading="lazy"></div>
+            <div class="slide-body">
+              <div class="slide-title">💬 ปรึกษาผมได้เสมอ ผมพร้อมดูแลเต็มที่</div>
+              <div class="slide-desc"> ถ้าใช้แล้วเกิดปัญหาตรงไหนหรือระบบนี้แทบจะช่วยอะไรไม่ได้เลย ทักแชทมาปรึกษาผมเสมอ ผมจะช่วยให้คำปรึกษา แนะนำ พูดคุยกันและช่วยวางแผน จนกว่าระบบนี้จะช่วยทุกคนได้จริงๆ เพราะผมอยากเห็นทุกคนที่ไว้ใจและสนับสนุนผมนั้น ได้รับผลลัพธ์ที่ดีที่สุดจริงๆ ครับ🫡❤️‍🔥</div>
+              <span class="slide-value" style="background:#e8f5e9;color:#2e7d32;font-weight:700;">🎁 โบนัสพิเศษ</span>
+            </div>
+          </div>
+ 
+        </div>
+      </div>
+      <button class="carousel-btn carousel-btn-prev" id="prevBtn">&#8592;</button>
+      <button class="carousel-btn carousel-btn-next" id="nextBtn">&#8594;</button>
+    </div>
+ 
+    <div class="price-section">
+      <div class="price-row">
+        <span class="price-discount">-33.9%</span>
+        <span class="price-new">฿390.-</span>
+        <span class="price-old">฿590</span>
+        <span class="flash-sale-badge" id="flash-sale-text">⚡ กำลังโหลด...</span>
+      </div>
+      
+        <span>⭐ 5 (99+ รีวิวจากผู้ใช้จริง)</span>
+        <span style="color:#dadce0;">|</span>
+        <span class="live-dot"></span>
+        <span>จำนวนผู้ใช้งานตอนนี้ 783 คน</span>
+      </div>
+    </div>
+ 
+    <a class="btn-main" href="checkout.html">
+      <span class="btn-main-top">🔥 คลิกเพื่อรับสิทธิ์ราคาพิเศษ ฿390.- เลย</span>
+      <span class="btn-main-sub">✅ ชำระเงินแล้ว ได้รับทุกอย่างทาง Email ทันทีภายใน 10 วิ</span>
+    </a>
+
+    <div class="summary-box">
+      <div class="summary-title" style="font-size:1.2rem;font-weight:800;"> สรุป</div>
+      <p class="summary-body" style="font-weight:700;text-align:center;">ลงทุนแค่ครั้งเดียวกับ Planner — แล้วได้รับอีก 7 อย่างที่เหลือเป็นโบนัสจากผมทันที 🎁</p>
+      
+      <p class="summary-body" style="text-align: center;">
+        "ทำไมผมถึงดูให้มากขนาดนี้ ในราคาแค่นี้?"<br>
+        พูดตามตรงนะครับ มันไม่ใช่การทำโปรโมชั่น แต่มันเป็นเพราะ "ความเสียดาย" ครับ🥺<br>
+        ผมคงรู้สึกผิดและเสียดายมากแน่ๆ ถ้าคุณรับแค่ Planner ไปแล้ว แต่ช่วยจัดการชีวิตให้ดีขึ้นสักนิดไม่ได้เลย
+        และผมไม่อยากให้งานที่ผมทุ่มเทสร้างมาหลายเดือน กลายเป็นแค่ไฟล์ขยะอีกชิ้นหนึ่งในเครื่อง ที่คุณซื้อไปแล้วไม่ได้ใช้จริงครับ🫡<br>
+      <br>
+        ผมเลยตัดสินใจมัดรวมทุกอย่างที่จำเป็นต้อง "มีครบ" ตั้งแต่แรก เพื่อให้มั่นใจว่า ทุกคนที่ไว้ใจและตัดสินใจจ่ายควักเงินจ่ายสนับสนุนผมมาแล้ว
+        จะได้รับเครื่องมือที่เพียงพอจะช่วยชีวิตให้ดีขึ้นได้จริงๆ ผมอยากให้เงินที่ของทุกคนที่ลงทุนไป มัน 'ทำงาน' ได้คุ้มค่าที่สุด
+        และอยากให้งานของผมมันได้ทำหน้าที่ของมันอย่างเต็มที่...แค่นั้นเลยครับ🙏
+      </p>
+
+      <p class="summary-body">( ในอนาคตที่ Planner นี้มีสิ่งใหม่ๆ เพิ่ม ราคาจะเพิ่มขึ้นเรื่อยๆ เช่นกันครับ แปลว่าเห็นราคาในตอนนี้เป็นเท่าไหร่ ก็ถือเป็นราคาที่ดีและคุ้มที่สุดของตอนนี้แล้วครับ🥰 )</p>
+      <p class="summary-body">ถ้าไม่อยากพลาด... <a class="summary-link" href="checkout.html">คลิกเพื่อรับสิทธิ์ 390.- </a> ได้เลยนะครับ🥰</p>
+      <p class="summary-body">ถ้าลังเลหรือติดปัญหาตรงไหนเพิ่มเติม สามารถทุกแชทถามผมเพจได้เลยนะครับ ยินดีช่วยมากๆ ครับ🥰</p>
+    </div>
+ 
+    <hr>
+ 
+    <div class="collapse-section" style="margin-top: 20px;">
+      <button class="collapse-toggle" id="whyToggle">
+        <span>🙏 เหตุผลที่ผมเลิกแจกระบบนี้ฟรี 🥺</span>
+        <span class="collapse-arrow">▼</span>
+      </button>
+      <div class="collapse-body" id="whyBody">
+        <div class="collapse-inner">ทุกคนน่ารู้ดีกันอยู่แล้วว่า...การจะเขียนสูตร Excel และออกแบบมาให้ใช้งานได้จริงและใช้ง่ายที่สุดนั้น ยากสุดๆ และปวดหัวมากๆ ผมเองต้องใช้เวลาเกอืบ 1 เลยครับ  กว่าที่สร้างออกมาแบบนี้ได้
+ .
+และสารภาพว่า...ช่วงแรก ผมแจกฟรีครับ ผมเคยแจกฟรีให้คนไปกลุ่มแรกในช่วงแรกที่ผมลงคลิปใช้งาน Planner ของตัวเองไป แจ่ผมก็พบว่า...ส่วนใหญ่รับไปแล้วก็ทิ้งไว้ไม่เปิดดูด้วยซ้ำ ไม่ได้ใช้งานอะไรมันเลย ผมไม่ได้โกรธอะไรนะครับ เพราะตามธรรมชาติของมนุาณ์ เรามักเผลอมองข้ามสิ่งที่ได้มาง่ายเกินไปครับ ผมเองก้เป็นแบบนั้นในบางครั้ง
+.
+แต่พอผมลงตัดสินใจมอบมันให้แค่กับคนที่ตัดสินใจและร้อมลงทุนกับมันจริงๆ กลายเป็นว่าทุกคนใช้งานจริงๆ เพราะเวลาที่เราลงทุนกับอะไรสักอย่าง เราจะรู้สึกว่ามันมีคุณค่าและต้องใช้ม้นให้คุ้มค่าที่สุด และนั่นคือจุดเริ่มต้นของการลุยกับเป้าหมายและสร้างวินัยได้จริงๆ ครับ
+.
+และผมอยากให้เฉพาะคนที่ลงทุนกับมันไปแล้วมันช่วยเขาได้จริงๆ เท่านั้นครับ เพราะถ้าเสียเงินลงทุนไปแล้ว แต่มันช่วยอะไรไม่ได้เลย ผมก็ไม่สบายใจครับ ผมเลยตั้งใจมอบทุกอย่างเพิ่มให้กับคนที่ไว้ใจสนับสนุนผม เพื่อที่จะช่วยให้ทุกคนที่รับไปแล้วนั้น สามารถใช้งานมันได้จริงๆ ครับ🥰🙏
+ </div>
+      </div>
+    </div>
+ 
+    <div class="reviews-section" style="margin-top:20px; padding-top:20px; border-top:1px solid #030303;">
+      <p class="review-heading">รีวิวจากผู้ใช้งานจริง</p>
+      <div class="review-stars" style="color: #000000;">5/5 ⭐⭐⭐⭐⭐ (99+ รีวิว)</div>
+    </div>
+      
+    <div class="review-masonry">
+        <div class="review-item"><img src="./ภาพ/รีวิว 1.jpg" alt="รีวิว 1" loading="lazy"></div>
+        <div class="review-item"><img src="./ภาพ/รีวิว 2.jpg" alt="รีวิว 2" loading="lazy"></div>
+        <div class="review-item"><img src="./ภาพ/รีวิว 3.jpg" alt="รีวิว 3" loading="lazy"></div>
+        <div class="review-item"><img src="./ภาพ/รีวิว 4.jpg" alt="รีวิว 4" loading="lazy"></div>
+        <div class="review-item"><img src="./ภาพ/รีวิว 5.jpg" alt="รีวิว 5" loading="lazy"></div>
+        <div class="review-item"><img src="./ภาพ/รีวิว 6.jpg" alt="รีวิว 6" loading="lazy"></div>
+        <div class="review-item"><img src="./ภาพ/รีวิว 7.jpg" alt="รีวิว 7" loading="lazy"></div>
+        <div class="review-item"><img src="./ภาพ/รีวิว 8.jpg" alt="รีวิว 8" loading="lazy"></div>
+        <div class="review-item"><img src="./ภาพ/รีวิว 9.jpg" alt="รีวิว 9" loading="lazy"></div>
+        <div class="review-item"><img src="./ภาพ/รีวิว 10.jpg" alt="รีวิว 10" loading="lazy"></div>
+        <div class="review-item"><img src="./ภาพ/รีวิว 11.jpg" alt="รีวิว 11" loading="lazy"></div>
+        <div class="review-item"><img src="./ภาพ/รีวิว 12.jpg" alt="รีวิว 12" loading="lazy"></div>
+        <div class="review-item"><img src="./ภาพ/รีวิว 13.jpg" alt="รีวิว 13" loading="lazy"></div>
+        <div class="review-item"><img src="./ภาพ/รีวิว 14.jpg" alt="รีวิว 14" loading="lazy"></div>
+        <div class="review-item"><img src="./ภาพ/รีวิว 15.jpg" alt="รีวิว 15" loading="lazy"></div>
+        <div class="review-item"><img src="./ภาพ/รีวิว 16.jpg" alt="รีวิว 16" loading="lazy"></div>
+        <div class="review-item"><img src="./ภาพ/รีวิว 17.jpg" alt="รีวิว 17" loading="lazy"></div>
+        <div class="review-item"><img src="./ภาพ/รีวิว 18.jpg" alt="รีวิว 18" loading="lazy"></div>
+        <div class="review-item"><img src="./ภาพ/รีวิว 19.jpg" alt="รีวิว 19" loading="lazy"></div>
+        <div class="review-item"><img src="./ภาพ/รีวิว 20.jpg" alt="รีวิว 20" loading="lazy"></div>
+        <div class="review-item"><img src="./ภาพ/รีวิว 21.jpg" alt="รีวิว 21" loading="lazy"></div>
+        <div class="review-item"><img src="./ภาพ/รีวิว 22.jpg" alt="รีวิว 22" loading="lazy"></div>
+        <div class="review-item"><img src="./ภาพ/รีวิว 23.jpg" alt="รีวิว 23" loading="lazy"></div>
+        <div class="review-item"><img src="./ภาพ/รีวิว 24.jpg" alt="รีวิว 24" loading="lazy"></div>
+        <div class="review-item"><img src="./ภาพ/รีวิว 25.jpg" alt="รีวิว 25" loading="lazy"></div>
+        <div class="review-item"><img src="./ภาพ/รีวิว 26.jpg" alt="รีวิว 26" loading="lazy"></div>
+        <div class="review-item"><img src="./ภาพ/รีวิว 27.jpg" alt="รีวิว 27" loading="lazy"></div>
+        <div class="review-item"><img src="./ภาพ/รีวิว 28.jpg" alt="รีวิว 28" loading="lazy"></div>
+        <div class="review-item"><img src="./ภาพ/รีวิว 29.jpg" alt="รีวิว 29" loading="lazy"></div>
+        <div class="review-item"><img src="./ภาพ/รีวิว 30.jpg" alt="รีวิว 30" loading="lazy"></div>
+        <div class="review-item"><img src="./ภาพ/รีวิว 31.jpg" alt="รีวิว 31" loading="lazy"></div>
+        <div class="review-item"><img src="./ภาพ/รีวิว 32.jpg" alt="รีวิว 32" loading="lazy"></div>
+        <div class="review-item"><img src="./ภาพ/รีวิว 33.jpg" alt="รีวิว 33" loading="lazy"></div>
+        <div class="review-item"><img src="./ภาพ/รีวิว 34.jpg" alt="รีวิว 34" loading="lazy"></div>
+        <div class="review-item"><img src="./ภาพ/รีวิว 35.jpg" alt="รีวิว 35" loading="lazy"></div>
+        <div class="review-item"><img src="./ภาพ/รีวิว 36.jpg" alt="รีวิว 36" loading="lazy"></div>
+        <div class="review-item"><img src="./ภาพ/รีวิว 37.jpg" alt="รีวิว 37" loading="lazy"></div>
+        <div class="review-item"><img src="./ภาพ/รีวิว 38.jpg" alt="รีวิว 38" loading="lazy"></div>
+        <div class="review-item"><img src="./ภาพ/รีวิว 39.jpg" alt="รีวิว 39" loading="lazy"></div>
+        <div class="review-item"><img src="./ภาพ/รีวิว 40.jpg" alt="รีวิว 40" loading="lazy"></div>
+        <div class="review-item"><img src="./ภาพ/รีวิว 41.jpg" alt="รีวิว 41" loading="lazy"></div>
+        <div class="review-item"><img src="./ภาพ/รีวิว 42.jpg" alt="รีวิว 42" loading="lazy"></div>
+        <div class="review-item"><img src="./ภาพ/รีวิว 43.jpg" alt="รีวิว 43" loading="lazy"></div>
+        <div class="review-item"><img src="./ภาพ/รีวิว 44.jpg" alt="รีวิว 44" loading="lazy"></div>
+        <div class="review-item"><img src="./ภาพ/รีวิว 45.jpg" alt="รีวิว 45" loading="lazy"></div>
+        <div class="review-item"><img src="./ภาพ/รีวิว 46.jpg" alt="รีวิว 46" loading="lazy"></div>
+        <div class="review-item"><img src="./ภาพ/รีวิว 47.jpg" alt="รีวิว 47" loading="lazy"></div>
+      </div>
+    </div>
+ 
+  </div>
+</div>
+<footer class="gs-footer">มึงลองฟัง.❤️‍🔥</footer>
+
+<!-- ── FLOATING BUY BUTTON (TikTok style) ── -->
+<div id="float-cta-bar">
+  <div class="float-price">
+    <span class="float-price-new">฿390.-</span>
+    <span class="float-price-old">฿590.-</span>
+  </div>
+  <a class="float-btn" href="checkout.html">🔥 รับสิทธิ์ราคาพิเศษเลย</a>
+</div>
+ 
+<script>
+  /* ── FLASH SALE TIMER ── */
+  function updateTimer() {
+    const now = new Date();
+    let target = new Date();
+    target.setHours(6, 0, 0, 0); 
+    if (now > target) target.setDate(target.getDate() + 1);
+    
+    const diff = target - now;
+    const h = Math.floor(diff / 3600000);
+    const m = Math.floor((diff % 3600000) / 60000);
+    const s = Math.floor((diff % 60000) / 1000);
+    
+    const el = document.getElementById("flash-sale-text");
+    if(el) {
+        el.innerHTML = `แฟลชเซล⚡${h} : ${m} : ${s}`;
+    }
+  }
+  setInterval(updateTimer, 1000);
+  updateTimer();
+
+  /* ── LIVE USERS POPUP (5 SEC INTERVAL) ── */
+  function showUserPopup() {
+    const popup = document.getElementById('live-users-popup');
+    document.getElementById('user-count').innerText = Math.floor(Math.random() * (30 - 10 + 1)) + 10;
+    popup.style.display = 'block';
+    setTimeout(() => { popup.style.display = 'none'; }, 3000);
+  }
+  setInterval(showUserPopup, 6000);
+
+  /* ── CAROUSEL LOGIC ── */
+  const track = document.getElementById("carouselTrack");
+  const dotsWrap = document.getElementById("carouselDots");
+  const slides = track.querySelectorAll(".carousel-slide");
+  const mainTitleIndicator = document.getElementById("current-slide-num");
+  
+  let cur = 0;
+  let total = slides.length;
+  
+  slides.forEach((_, i) => { 
+    const d = document.createElement("div"); 
+    d.className = "carousel-dot" + (i === 0 ? " active" : ""); 
+    d.onclick = () => go(i); 
+    dotsWrap.appendChild(d); 
+  });
+  
+  function go(i) { 
+    cur = (i + total) % total; 
+    track.style.transform = "translateX(-" + cur * 100 + "%)"; 
+    dotsWrap.querySelectorAll(".carousel-dot").forEach((d, j) => d.classList.toggle("active", j === cur));
+    if(mainTitleIndicator) mainTitleIndicator.innerText = cur + 1;
+  }
+  
+  document.getElementById("prevBtn").onclick = () => go(cur - 1);
+  document.getElementById("nextBtn").onclick = () => go(cur + 1);
+  
+  let sx = 0, sy = 0;
+  track.addEventListener("touchstart", e => {
+    sx = e.touches[0].clientX; sy = e.touches[0].clientY;
+  }, { passive: true });
+  
+  track.addEventListener("touchend", e => { 
+    const dx = sx - e.changedTouches[0].clientX;
+    const dy = sy - e.changedTouches[0].clientY; 
+    if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 2) {
+      go(dx > 0 ? cur + 1 : cur - 1); 
+    }
+  });
+  
+  const toggles = ["storyToggle|storyBody", "whyToggle|whyBody"];
+  toggles.forEach(s => { 
+    const [tid, bid] = s.split("|"); 
+    const t = document.getElementById(tid);
+    const b = document.getElementById(bid); 
+    t.onclick = () => { b.classList.toggle("open"); t.classList.toggle("open"); }; 
+  });
+</script>
+</body>
+</html>
