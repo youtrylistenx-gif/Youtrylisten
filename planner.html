@@ -886,24 +886,13 @@
     </div>
  
     <div class="price-section">
-      <div class="price-row">
-        <span class="price-discount">-33.9%</span>
-        <span class="price-new">฿390.-</span>
-        <span class="price-old">฿590</span>
-        <span class="flash-sale-badge" id="flash-sale-text">⚡ กำลังโหลด...</span>
-      </div>
-      
+      <div class="stats-row">
         <span>⭐ 5 (99+ รีวิวจากผู้ใช้จริง)</span>
         <span style="color:#dadce0;">|</span>
         <span class="live-dot"></span>
         <span>จำนวนผู้ใช้งานตอนนี้ 783 คน</span>
       </div>
     </div>
- 
-    <a class="btn-main" href="checkout.html">
-      <span class="btn-main-top">🔥 คลิกเพื่อรับสิทธิ์ราคาพิเศษ ฿390.- เลย</span>
-      <span class="btn-main-sub">✅ ชำระเงินแล้ว ได้รับทุกอย่างทาง Email ทันทีภายใน 10 วิ</span>
-    </a>
 
     <div class="summary-box">
       <div class="summary-title" style="font-size:1.2rem;font-weight:800;"> สรุป</div>
@@ -1035,10 +1024,6 @@
     const m = Math.floor((diff % 3600000) / 60000);
     const s = Math.floor((diff % 60000) / 1000);
     
-    const el = document.getElementById("flash-sale-text");
-    if(el) {
-        el.innerHTML = `แฟลชเซล⚡${h} : ${m} : ${s}`;
-    }
     const floatEl = document.getElementById("float-flash-sale-text");
     if(floatEl) {
         floatEl.innerHTML = `⚡ แฟลชเซลเหลือ ${h} : ${m} : ${s}`;
