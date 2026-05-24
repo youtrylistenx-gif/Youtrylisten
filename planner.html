@@ -19,11 +19,14 @@
       padding: 0;
     }
     
-    body { 
-      font-family: "Prompt", Arial, sans-serif; 
-      font-size: 16px; 
-      color: #202124; 
-      background: #fff; 
+    body {
+      font-family: "Prompt", Arial, sans-serif;
+      font-size: 16px;
+      color: #202124;
+      background: #fff;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
     }
  
     /* ── LIVE USERS POPUP (POSITIONED TOP CENTER) ── */
@@ -614,6 +617,14 @@
       50% { transform: scale(1.025); }
     }
  
+    /* ── ตัวหนา (strong) ในเนื้อหาทุกกล่อง → สีแดง ── */
+    .collapse-inner strong,
+    .summary-body strong,
+    .slide-desc strong,
+    .slide-title strong {
+      color: #ea4335;
+    }
+
     /* ── 4. SUMMARY BOX ── */
     .summary-box { 
       background: #fffbf0; 
@@ -779,6 +790,11 @@
       margin-top: 32px; 
     }
  
+    /* ── DESKTOP ONLY: เพิ่ม font-size +1px (ไม่กระทบมือถือ/iPad) ── */
+    @media (min-width: 1025px) {
+      html { font-size: 17px; }
+    }
+
     /* ── RESPONSIVE ── */
     @media (max-width: 768px) {
       .review-masonry { column-count: 2; column-gap: 10px; }
