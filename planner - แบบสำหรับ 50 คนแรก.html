@@ -964,6 +964,154 @@
       .float-btn-top { font-size: 1.3rem; }
       .float-btn-sub { font-size: 0.95rem; }
     }
+    /* ── WHAT YOU GET BOX ── */
+    .wir-box {
+      background: #fff;
+      border: 1px solid #e8eaed;
+      border-radius: 12px;
+      padding: 22px 22px 18px;
+      margin-bottom: 16px;
+    }
+
+    .wir-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: #ea4335;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .wir-title {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: #202124;
+      margin-bottom: 20px;
+      line-height: 1.35;
+    }
+
+    .wir-item {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      margin-bottom: 18px;
+    }
+
+    .wir-icon {
+      width: 38px;
+      height: 38px;
+      background: #f1f3f4;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .wir-text strong {
+      display: block;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #202124 !important;
+      margin-bottom: 4px;
+    }
+
+    .wir-text p {
+      font-size: 0.85rem;
+      color: #5f6368;
+      line-height: 1.7;
+    }
+
+    .wir-sub-items {
+      margin-top: 8px;
+      padding-left: 2px;
+    }
+
+    .wir-sub-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 7px;
+      font-size: 0.82rem;
+      color: #5f6368;
+      margin-bottom: 5px;
+      line-height: 1.55;
+    }
+
+    .wir-sub-item::before {
+      content: "→";
+      color: #ea4335;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .wir-divider {
+      border: none;
+      border-top: 1px dashed #e0e0e0;
+      margin: 20px 0;
+      width: 100%;
+      max-width: 100%;
+    }
+
+    .wir-bonus {
+      background: #fffbf0;
+      border: 1px solid #ffe082;
+      border-radius: 10px;
+      padding: 18px 18px 16px;
+    }
+
+    .wir-bonus-tag {
+      display: inline-block;
+      background: #f5c518;
+      color: #000;
+      font-size: 0.7rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 2px 9px;
+      border-radius: 4px;
+      margin-bottom: 10px;
+    }
+
+    .wir-bonus-title {
+      font-size: 1rem;
+      font-weight: 800;
+      color: #202124;
+      margin-bottom: 8px;
+    }
+
+    .wir-bonus p {
+      font-size: 0.85rem;
+      color: #5f6368;
+      line-height: 1.7;
+    }
+
+    .wir-bonus-list {
+      margin-top: 10px;
+    }
+
+    .wir-bonus-item {
+      font-size: 0.82rem;
+      color: #5f6368;
+      margin-bottom: 6px;
+      display: flex;
+      gap: 7px;
+      line-height: 1.55;
+    }
+
+    .wir-bonus-item::before {
+      content: "✓";
+      color: #43a047;
+      flex-shrink: 0;
+    }
+
+    .wir-bonus-note {
+      margin-top: 12px;
+      font-size: 0.78rem;
+      color: #9e9e9e;
+    }
   </style>
 </head>
 <body>
@@ -1183,6 +1331,75 @@
       <span class="btn-main-sub">⚠️ เหลือเพียง 5 สิทธิ์สุดท้ายเท่านั้น — ชำระเงินแล้วได้รับทันที</span>
     </a>
  
+
+    <!-- ── สิ่งที่จะได้รับ ── -->
+    <div class="wir-box">
+      <span class="wir-label" style="font-size:1.25rem;font-weight:800;text-align:center;letter-spacing:0;text-transform:none;display:block;">สรุป สิ่งที่จะได้รับ</span>
+      <h2 class="wir-title" style="text-align:center;">ระบบเดียว ครบทุกอย่าง<br>ที่ต้องการจริงๆ</h2>
+
+      <div class="wir-item">
+        <div class="wir-icon">📈</div>
+        <div class="wir-text">
+          <strong>Planner — วางแผน ติดตามความคืบหน้าของงานและเป้าหมาย</strong>
+          <span style="font-size:0.95rem;font-weight:700;color:#ea4335;display:block;margin-bottom:4px;">มูลค่า 990.-</span>
+          <p>จากชีวิตที่ยุ่งเหยิง กลายเป็นชีวิตที่มีระเบียบแบบแผน มีกราฟติดตามความคืบหน้าแบบ Real Time ทุกเรื่อง</p>
+        </div>
+      </div>
+
+      <div class="wir-item">
+        <div class="wir-icon">✅</div>
+        <div class="wir-text">
+          <strong>Habit Tracker — สร้างและติดตามวินัย</strong>
+          <span style="font-size:0.95rem;font-weight:700;color:#ea4335;display:block;margin-bottom:4px;">มูลค่า 500.-</span>
+          <p>เปลี่ยนความรู้สึกต้องฝืนทำ ให้กลายเป็นความภูมิใจทุกครั้งที่เห็นกราฟความต่อเนื่องของตัวเอง</p>
+        </div>
+      </div>
+
+      <div class="wir-item">
+        <div class="wir-icon">💰</div>
+        <div class="wir-text">
+          <strong>Money Tracker — บริหารเงิน</strong>
+          <span style="font-size:0.95rem;font-weight:700;color:#43a047;display:block;margin-bottom:4px;">🎁 โบนัสพิเศษ มูลค่า 500.-</span>
+          <p>เห็นเงินที่เข้ามา เงินที่ออกไป เงินที่เหลือ และสิ่งที่ทำให้การเงินพัง — ครบในชีทเดียวกัน</p>
+        </div>
+      </div>
+
+      <div class="wir-item">
+        <div class="wir-icon">📊</div>
+        <div class="wir-text">
+          <strong>แดชบอร์ดสรุปรายปี — เห็นพัฒนาการทุกเรื่องของทั้งปีในหน้าเดียว</strong>
+          <span style="font-size:0.95rem;font-weight:700;color:#43a047;display:block;margin-bottom:4px;">🎁 โบนัสพิเศษ มูลค่า 500.-</span>
+          <p>รวมทุกด้านไว้ในที่เดียว ทั้งเป้าหมาย วินัย และการเงิน เพื่อทบทวนและวางแผนปีหน้าได้ดียิ่งขึ้น</p>
+        </div>
+      </div>
+
+      <div class="wir-item">
+        <div class="wir-icon">🎬</div>
+        <div class="wir-text">
+          <strong>วิดีโอสอนวิธีใช้งานสั้นๆ 6 นาที</strong>
+          <span style="font-size:0.95rem;font-weight:700;color:#43a047;display:block;margin-bottom:4px;">🎁 สิ่งที่ผมตั้งใจมอบเพิ่มให้</span>
+          <p>เปิดดูครั้งเดียวพร้อมใช้ได้เลย ครอบคลุมทุกอย่างที่ต้องรู้ ไม่ต้องปวดหัว</p>
+        </div>
+      </div>
+
+      <div class="wir-item">
+        <div class="wir-icon">🔄</div>
+        <div class="wir-text">
+          <strong>อัปเดตฟรีตลอดชีพ — ได้ทุกระบบใหม่โดยไม่ต้องเสียเงินเพิ่ม</strong>
+          <span style="font-size:0.95rem;font-weight:700;color:#43a047;display:block;margin-bottom:4px;">🎁 สิ่งที่ผมตั้งใจมอบเพิ่มให้</span>
+          <p>ซื้อครั้งเดียว ได้ทุกเวอร์ชั่นใหม่ตลอด ระบบจะดีขึ้นเรื่อยๆ ตาม feedback</p>
+        </div>
+      </div>
+
+      <div class="wir-item" style="margin-bottom:0;">
+        <div class="wir-icon">💬</div>
+        <div class="wir-text">
+          <strong>ปรึกษาได้เสมอ — พร้อมดูแลเต็มที่</strong>
+          <span style="font-size:0.95rem;font-weight:700;color:#43a047;display:block;margin-bottom:4px;">🎁 สิ่งที่ผมตั้งใจมอบเพิ่มให้</span>
+          <p>ถ้าใช้แล้วงงหรือระบบช่วยอะไรไม่ได้เลย ทักมาปรึกษาได้เสมอ ไม่ปล่อยให้ใช้ไม่เป็นแล้วทิ้งไว้คนเดียว</p>
+        </div>
+      </div>
+    </div>
 
     <div class="summary-box">
       <div class="summary-title" style="font-size:1.2rem;font-weight:800;"> สรุป</div>
