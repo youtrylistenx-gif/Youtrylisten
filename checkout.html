@@ -389,16 +389,16 @@
         <span>ราคาเดิม</span>
         <div>
            <span class="flash-sale-badge" id="flash-sale-text">⚡ กำลังโหลด...</span>
-           <span class="old-price">฿1,490</span>
+           <span class="old-price" id="old-price">฿1,490</span>
         </div>
       </div>
       <div class="summary-row">
         <span>ส่วนลด</span>
-        <span class="discount-text">- ฿1,091</span>
+        <span class="discount-text" id="discount-amount">- ฿1,091</span>
       </div>
       <div class="summary-total">
         <span>ยอดที่ต้องโอน</span>
-        <span>฿399</span>
+        <span id="final-price">฿399</span>
       </div>
     </div>
 
@@ -450,7 +450,7 @@
         <span class="label-icon">💵</span>
         <span class="label-bold">ยอดเงินที่โอนจริง (฿)</span>
       </label>
-      <input type="number" id="amount" placeholder="ระบุยอดเงินที่คุณโอน เช่น 399">
+      <input type="number" id="amount" placeholder="ระบุยอดเงินที่คุณโอน">
       <div id="amount-error" class="error-text"></div>
 
       <button class="btn-file" id="btn-file" onclick="document.getElementById('file').click()">
@@ -474,18 +474,42 @@
       </button>
 
    </div></div></div><script>
-  /* Flash Sale Timer (วนลูปทุก 1 ชั่วโมง) */
+  /* ══════════════════════════════════════════════════════════════
+     ⚙️  ตั้งค่าราคาที่นี่ที่เดียว — แก้แค่นี้ ทั้งหน้าอัปเดตเอง
+     ══════════════════════════════════════════════════════════════
+     mode: "flash"    → แสดง countdown แฟลชเซล + ใช้ราคา price_flash
+     mode: "50first"  → ซ่อน countdown + ใช้ราคา price_50first
+     ══════════════════════════════════════════════════════════════ */
+  const _urlMode = new URLSearchParams(window.location.search).get("mode");
+  const CONFIG = {
+    mode:          _urlMode === "50first" ? "50first" : "flash",  // อ่านจาก URL อัตโนมัติ
+    price_flash:   399,      // ราคาแฟลชเซล
+    price_50first: 390,      // ราคาโปร 50 คนแรก
+    original:      1490,     // ราคาเต็ม
+  };
+  /* ════════════════════════════════════════════════════════════ */
+
+  function applyConfig() {
+    const price    = CONFIG.mode === "flash" ? CONFIG.price_flash : CONFIG.price_50first;
+    const discount = CONFIG.original - price;
+    document.getElementById("old-price").textContent      = "฿" + CONFIG.original.toLocaleString();
+    document.getElementById("discount-amount").textContent = "- ฿" + discount.toLocaleString();
+    document.getElementById("final-price").textContent    = "฿" + price.toLocaleString();
+    const badge = document.getElementById("flash-sale-text");
+    badge.style.display = CONFIG.mode === "flash" ? "inline-flex" : "none";
+  }
+  applyConfig();
+
+  /* Flash Sale Timer — จะทำงานเฉพาะ mode: "flash" */
   function updateTimer() {
+    if (CONFIG.mode !== "flash") return;
     const now = new Date();
     const msInHour = 3600000;
     const diff = msInHour - (now.getTime() % msInHour);
     const m = Math.floor((diff % msInHour) / 60000);
     const s = Math.floor((diff % 60000) / 1000);
-
     const el = document.getElementById("flash-sale-text");
-    if(el) {
-        el.innerHTML = `แฟลชเซล⚡0 : ${String(m).padStart(2,'0')} : ${String(s).padStart(2,'0')}`;
-    }
+    if (el) el.innerHTML = `แฟลชเซล⚡0 : ${String(m).padStart(2,'0')} : ${String(s).padStart(2,'0')}`;
   }
   setInterval(updateTimer, 1000);
   updateTimer();

@@ -156,6 +156,13 @@
     .product-sold { font-size: 0.85rem; color: #5f6368; }
     .product-stars { font-size: 0.85rem; color: #f59e0b; }
 
+    /* ── SLOTS BAR (โปร 50 คนแรก) ── */
+    #idx-slots-wrap { display: none; margin-top: 4px; }
+    .idx-slots-label { font-size: 0.75rem; color: #202124; font-weight: 600; line-height: 1.5; margin-bottom: 5px; }
+    .idx-slots-badge { display: block; font-size: 0.75rem; color: #d32f2f; font-weight: 700; margin-top: 2px; }
+    .idx-slots-bar { width: 100%; height: 8px; background: #f1f3f4; border-radius: 99px; overflow: hidden; }
+    .idx-slots-bar-fill { height: 100%; background: linear-gradient(90deg, #f44336, #b71c1c); border-radius: 99px; transition: width 0.6s ease; }
+
     /* ── MISC LINKS & FOOTER ── */
     .links-section { margin-bottom: 48px; padding: 0 4px; }
     .links-list { list-style: none; display: flex; flex-direction: column; gap: 0; border: 1px solid #e0e0e0; border-radius: 8px; overflow: hidden; }
@@ -191,15 +198,24 @@
 
     <div class="product-grid">
       <a class="product-card" href="planner.html">
-        <span class="discount-badge">-73.9%</span>
+        <span class="discount-badge" id="planner-badge">-73.9%</span>
         <div class="product-img"><img src="./ภาพ/AP Slide 1.png" alt="Planner"></div>
         <div class="product-info">
           <div class="product-title">📈📊Planner - วางแผนชีวิตติดตามเป้าหมาย สร้างวินัย บริหารเงิน อัปเดตฟรีตลอดชีพ</div>
           <div class="price-container">
-            <span class="price-new">฿399.-</span>
-            <span class="price-old">฿1,490.-</span>
+            <span class="price-new" id="planner-price">฿399.-</span>
+            <span class="price-old" id="planner-old">฿1,490.-</span>
           </div>
           <div class="timer" id="timer1">Flash Sale: กำลังโหลด...</div>
+          <div id="idx-slots-wrap">
+            <div class="idx-slots-label">
+              ราคาพิเศษนี้สำหรับ <strong id="idx-slots-total">50 คน</strong>แรกเท่านั้น — รับสิทธิ์แล้ว <span id="idx-slots-count">45/50</span> คน
+              <span class="idx-slots-badge" id="idx-slots-badge">🔥 เหลืออีกแค่ 5 สิทธิ์สุดท้าย!</span>
+            </div>
+            <div class="idx-slots-bar">
+              <div class="idx-slots-bar-fill" id="idx-slots-bar-fill" style="width:0%"></div>
+            </div>
+          </div>
           <div class="product-sold">รับไปใช้งานแล้ว 789 คน</div>
           <div class="product-stars">⭐5</div>
         </div>
@@ -271,7 +287,12 @@
   <footer class="gs-footer">มึงลองฟัง.❤️‍🔥</footer>
 
   <script>
-    /* Flash Sale Timer (วนลูปทุก 1 ชั่วโมง) */
+    const INDEX_CONFIG = {
+      price_flash:   399,
+      price_50first: 390,
+      original:      1490,
+    };
+
     function updateTimer() {
       const now = new Date();
       const msInHour = 3600000;
@@ -280,8 +301,61 @@
       const s = Math.floor((diff % 60000) / 1000);
       document.getElementById("timer1").innerHTML = `แฟลชเซล⚡0 : ${String(m).padStart(2,'0')} : ${String(s).padStart(2,'0')}`;
     }
-    setInterval(updateTimer, 1000);
-    updateTimer();
+
+    async function applyPlannerMode() {
+      let mode = null;
+      let slotsUsed = 45, slotsTotal = 50;
+
+      // ลอง fetch ก่อน (HTTP server) — ได้ข้อมูลล่าสุดเสมอ
+      try {
+        const res  = await fetch("planner.html?_=" + Date.now());
+        const text = await res.text();
+        const mMatch = text.match(/checkout\.html\?mode=(\w+)/);
+        if (mMatch) { mode = mMatch[1]; localStorage.setItem('plannerMode', mode); }
+        const uMatch = text.match(/data-used="(\d+)"/);
+        const tMatch = text.match(/data-total="(\d+)"/);
+        if (uMatch) slotsUsed  = parseInt(uMatch[1]);
+        if (tMatch) slotsTotal = parseInt(tMatch[1]);
+        localStorage.setItem('plannerSlots', JSON.stringify({used: slotsUsed, total: slotsTotal}));
+      } catch (e) {}
+
+      // fallback: localStorage (file:// protocol)
+      if (!mode) mode = localStorage.getItem('plannerMode');
+      try {
+        const s = JSON.parse(localStorage.getItem('plannerSlots') || '{}');
+        if (s.used  !== undefined) slotsUsed  = s.used;
+        if (s.total !== undefined) slotsTotal = s.total;
+      } catch (e) {}
+
+      mode = mode || "flash";
+
+      const price    = mode === "50first" ? INDEX_CONFIG.price_50first : INDEX_CONFIG.price_flash;
+      const discount = Math.round((INDEX_CONFIG.original - price) / INDEX_CONFIG.original * 100 * 10) / 10;
+
+      document.getElementById("planner-price").textContent = "฿" + price + ".-";
+      document.getElementById("planner-badge").textContent = "-" + discount + "%";
+
+      const timer     = document.getElementById("timer1");
+      const slotsWrap = document.getElementById("idx-slots-wrap");
+
+      if (mode === "flash") {
+        timer.style.display = "";
+        slotsWrap.style.display = "none";
+        updateTimer();
+        setInterval(updateTimer, 1000);
+      } else {
+        timer.style.display = "none";
+        slotsWrap.style.display = "block";
+        const remaining = slotsTotal - slotsUsed;
+        const pct = Math.min(100, Math.round(slotsUsed / slotsTotal * 100));
+        document.getElementById("idx-slots-bar-fill").style.width = pct + "%";
+        document.getElementById("idx-slots-count").textContent    = slotsUsed + "/" + slotsTotal;
+        document.getElementById("idx-slots-total").textContent    = slotsTotal + " คน";
+        document.getElementById("idx-slots-badge").textContent    = "🔥 เหลืออีกแค่ " + remaining + " สิทธิ์สุดท้าย!";
+      }
+    }
+
+    applyPlannerMode();
 
     /* Live Users Popup */
     function showUserPopup() {

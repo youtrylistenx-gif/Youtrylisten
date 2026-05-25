@@ -522,49 +522,6 @@
       font-weight: 700;
       border: 1px solid #ffcdd2;
     }
-
-    .slots-wrap {
-      margin-top: 12px;
-    }
-    .slots-label {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 0.85rem;
-      color: #202124;
-      font-weight: 700;
-      margin-bottom: 6px;
-      flex-wrap: wrap;
-      gap: 4px;
-    }
-    .slots-label strong {
-      color: #202124;
-    }
-    .slots-bar {
-      width: 100%;
-      height: 10px;
-      background: #f1f3f4;
-      border-radius: 99px;
-      overflow: hidden;
-    }
-    .slots-bar-fill {
-      height: 100%;
-      width: 90%;
-      background: linear-gradient(90deg, #f44336, #b71c1c);
-      border-radius: 99px;
-      position: relative;
-    }
-    .slots-bar-fill::after {
-      content: "";
-      position: absolute;
-      right: 0;
-      top: 0;
-      bottom: 0;
-      width: 30px;
-      background: rgba(255,255,255,0.25);
-      border-radius: 99px;
-      animation: pulse 1.6s ease-out infinite;
-    }
     
     .product-title { 
       font-size: 0.92rem; 
@@ -661,6 +618,14 @@
       50% { transform: scale(1.025); }
     }
  
+    /* ── ตัวหนา (strong) ในเนื้อหาทุกกล่อง → สีแดง ── */
+    .collapse-inner strong,
+    .summary-body strong,
+    .slide-desc strong,
+    .slide-title strong {
+      color: #ea4335;
+    }
+
     /* ── 4. SUMMARY BOX ── */
     .summary-box { 
       background: #fffbf0; 
@@ -684,14 +649,6 @@
       line-height: 1.8;
       margin-bottom: 10px;
       white-space: pre-wrap;
-    }
-
-    /* ── ตัวหนา (strong) ในเนื้อหาทุกกล่อง → สีแดง ── */
-    .collapse-inner strong,
-    .summary-body strong,
-    .slide-desc strong,
-    .slide-title strong {
-      color: #ea4335;
     }
     
     .summary-link { 
@@ -1042,94 +999,6 @@
       .wir-text p { font-size: 0.77rem; }
       .wir-text span { font-size: 0.79rem !important; }
     }
-
-    .wir-sub-items {
-      margin-top: 8px;
-      padding-left: 2px;
-    }
-
-    .wir-sub-item {
-      display: flex;
-      align-items: flex-start;
-      gap: 7px;
-      font-size: 0.82rem;
-      color: #5f6368;
-      margin-bottom: 5px;
-      line-height: 1.55;
-    }
-
-    .wir-sub-item::before {
-      content: "→";
-      color: #ea4335;
-      flex-shrink: 0;
-      margin-top: 1px;
-    }
-
-    .wir-divider {
-      border: none;
-      border-top: 1px dashed #e0e0e0;
-      margin: 20px 0;
-      width: 100%;
-      max-width: 100%;
-    }
-
-    .wir-bonus {
-      background: #fffbf0;
-      border: 1px solid #ffe082;
-      border-radius: 10px;
-      padding: 18px 18px 16px;
-    }
-
-    .wir-bonus-tag {
-      display: inline-block;
-      background: #f5c518;
-      color: #000;
-      font-size: 0.7rem;
-      font-weight: 800;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      padding: 2px 9px;
-      border-radius: 4px;
-      margin-bottom: 10px;
-    }
-
-    .wir-bonus-title {
-      font-size: 1rem;
-      font-weight: 800;
-      color: #202124;
-      margin-bottom: 8px;
-    }
-
-    .wir-bonus p {
-      font-size: 0.85rem;
-      color: #5f6368;
-      line-height: 1.7;
-    }
-
-    .wir-bonus-list {
-      margin-top: 10px;
-    }
-
-    .wir-bonus-item {
-      font-size: 0.82rem;
-      color: #5f6368;
-      margin-bottom: 6px;
-      display: flex;
-      gap: 7px;
-      line-height: 1.55;
-    }
-
-    .wir-bonus-item::before {
-      content: "✓";
-      color: #43a047;
-      flex-shrink: 0;
-    }
-
-    .wir-bonus-note {
-      margin-top: 12px;
-      font-size: 0.78rem;
-      color: #9e9e9e;
-    }
   </style>
 </head>
 <body>
@@ -1209,7 +1078,8 @@
           
           <div class="carousel-slide">
             <div class="slide-img">
-              <span class="slide-badge price">💰 มูลค่า ฿990.-</span>
+              <span class="slide-badge price">💰 มูลค่า
+                ฿990.-</span>
               <img src="./ภาพ/PL โปสเตอร์.png" alt="Slide 2" loading="lazy">
             </div>
             <div class="slide-body">
@@ -1220,7 +1090,8 @@
           
           <div class="carousel-slide">
             <div class="slide-img">
-              <span class="slide-badge price">💰 มูลค่า ฿500.-</span>
+              <span class="slide-badge price">💰 มูลค่า
+                ฿500.-</span>
               <img src="./ภาพ/HB โปสเตอร์.png" alt="Slide 3" loading="lazy">
             </div>
             <div class="slide-body">
@@ -1250,7 +1121,7 @@
               <img src="./ภาพ/PY โปสเตอร์.png" alt="Slide 5" loading="lazy">
             </div>
             <div class="slide-body">
-              <div class="slide-title">📊 สรุปรายปี — เห็นพัฒนาการทุกเรื่องของทั้งปีในหน้าเดียว</div>
+              <div class="slide-title">📊 แดชบอร์ดสรุปรายปี — เห็นพัฒนาการทุกเรื่องของทั้งปีในหน้าเดียว</div>
               <div class="slide-desc">    หน้าสรุปภาพรวมทั้งปี รวมทุกด้านไว้ในที่เดียว ทั้งเป้าหมาย วินัย และการเงิน เพื่อให้เเห็นว่าปีนี้เราเติบโตไปแค่ไหน ีอะไรต้องปรับปรุง เพื่อทบทวนและวางแผนปีหน้าได้ดียิ่งขึ้นอีกครับ🥰📈</div>
             </div>
           </div>
@@ -1302,7 +1173,7 @@
     <div class="collapse-section" style="margin-top: 20px;">
       <button class="collapse-toggle" id="whyToggle">
         <span style="display:flex;flex-direction:column;gap:3px;">
-          <span>🙏 เหตุผลที่ระบบนี้ไม่ฟรีนะครับ 🥺</span>
+          <span>🙏 เหตุผลที่ระบบนี้ไม่ฟรี 🥺</span>
           <span style="font-size:0.75rem;color:#1a73e8;font-weight:500;">คลิกเพื่ออ่าน ›</span>
         </span>
         <span class="collapse-arrow">▼</span>
@@ -1319,22 +1190,14 @@
 
     <div class="price-section">
       <div class="price-row">
-        <span class="price-discount">-73.8%</span>
-        <span class="price-new">฿390.-</span>
+        <span class="price-discount">-73.9%</span>
+        <span class="price-new">฿399.-</span>
         <span class="price-old">฿1,490.-</span>
+        <span class="flash-sale-badge" id="flash-sale-text">⚡ กำลังโหลด...</span>
       </div>
-      <div class="slots-wrap" id="slots-wrap" data-used="45" data-total="50">
-        <div class="slots-label">
-          <span>ราคานี้พิเศษสำหรับ <strong id="slots-total-label">50 คน</strong>แรกจากคลิปล่าสุดเท่านั้น — รับสิทธิ์แล้ว <span id="slots-count-label">45/50</span> คน</span>
-          <span class="flash-sale-badge" id="slots-badge">🔥 เหลืออีกแค่ 6 สิทธิ์สุดท้าย!</span>
-        </div>
-        <div class="slots-bar">
-          <div class="slots-bar-fill" id="slots-bar-fill"></div>
-        </div>
-      </div>
-      <div class="stats-row" style="margin-top:12px;">
+      <div class="stats-row">
         <a href="#reviews-section" style="display:inline-flex;align-items:center;gap:5px;text-decoration:none;color:#5f6368;border-bottom:1px dashed #bbb;padding-bottom:1px;cursor:pointer;">
-          ⭐ 5 (99+ รีวิวจากผู้ใช้จริง) <span style="color:#1a73e8;font-size:0.82rem;font-weight:600;border:none;border-bottom:none;">↓ คลิกเพื่อดูรีวิว</span>
+          ⭐ 5 (99+ รีวิวจากผู้ใช้จริง) <span style="color:#1a73e8;font-size:0.82rem;font-weight:600;">↓ คลิกเพื่อดูรีวิว</span>
         </a>
         <span style="color:#dadce0;">|</span>
         <span style="display:inline-flex; align-items:center; gap:8px; white-space:nowrap;">
@@ -1344,13 +1207,12 @@
       </div>
     </div>
 
-    <a class="btn-main" href="checkout.html">
-      <span class="btn-main-top">🔥 รับสิทธิ์ราคาพิเศษ ฿390.- เลย</span>
-      <span class="btn-main-sub">⚠️ เหลือเพียง 5 สิทธิ์สุดท้ายเท่านั้น — ชำระเงินแล้วได้รับทันที</span>
+    <a class="btn-main" href="checkout.html?mode=flash">
+      <span class="btn-main-top">🔥 คลิกเพื่อรับสิทธิราคาพิเศษ ฿399.- เลย</span>
+      <span class="btn-main-sub">✅ ชำระเงินเสร็จแล้ว ได้รับทุกอย่างทาง Email ทันที</span>
     </a>
  
-
-    <!-- ── สิ่งที่จะได้รับ ── -->
+<!-- ── สิ่งที่จะได้รับ ── -->
     <div class="wir-box">
       <span class="wir-label">สรุป</span>
       <h2 class="wir-title">รวมมูลค่าทั้งหมดที่จะได้รับคือ <span style="color:#ea4335;">1,490.-</span> ( และมูลค่าของโบนัสพิเศษอีก <span style="color:#43a047;">1,000.-</span> ) ลงทุนวันนี้แค่ครั้งเดียว แต่ได้ระบบที่ใช้งานได้ตลอดชีวิตและทุกอย่างตามนี้ทันที
@@ -1417,9 +1279,10 @@
     <div class="summary-box">
       <p class="summary-body">   "ทำไมผมถึงดูให้มากขนาดนี้?" พูดตามตรงนะครับ มันไม่ใช่การทำโปรโมชั่น แต่มันเป็นเพราะ "ความเสียดายครับ🥺" ผมคงรู้สึกแย่และเสียดายมากแน่ๆ ถ้าคุณรับแค่ Planner ไปแล้ว แต่ช่วยจัดการชีวิตให้ดีขึ้นสักนิดไม่ได้เลยและผมไม่อยากให้งานที่ผมทุ่มเทสร้างมาหลายเดือน กลายเป็นแค่ไฟล์ขยะอีกชิ้นหนึ่งในเครื่อง ที่คุณซื้อไปแล้วไม่ได้ใช้จริงครับ🫡</p>
         <p class="summary-body">   ผมเลยตัดสินใจมัดรวมทุกอย่างที่จำเป็นต้อง "มีครบ" ตั้งแต่แรก เพื่อให้มั่นใจว่า ทุกคนที่ไว้ใจและตัดสินใจจ่ายควักเงินจ่ายสนับสนุนผมมาแล้ว จะได้รับเครื่องมือที่เพียงพอจะช่วยชีวิตให้ดีขึ้นได้จริงๆ ผมอยากให้เงินที่ของทุกคนที่ลงทุนไป มัน 'ทำงาน' ได้คุ้มค่าที่สุด และอยากให้สิ่งที่ผมตั้งใจทำขึ้นมา มันได้ทำหน้าที่ของมันอย่างเต็มที่...แค่นั้นเลยครับ🙏</p>
-      <p class="summary-body">ถ้าไม่อยากพลาด... <a class="summary-link" href="checkout.html">คลิกเพื่อรับสิทธิ์ 399.- </a> ได้เลยนะครับ🥰</p>
+      <p class="summary-body">ถ้าไม่อยากพลาด... <a class="summary-link" href="checkout.html?mode=flash">คลิกเพื่อรับสิทธิ์ 399.- </a> ได้เลยนะครับ🥰</p>
       <p class="summary-body">ถ้าลังเลหรือติดปัญหาตรงไหนเพิ่มเติม สามารถทักแชทผมมาเพจได้เลยนะครับ ยินดีช่วยมากๆ ครับ🥰</p>
     </div>
+
     <div id="reviews-section" class="reviews-section" style="margin-top:20px; padding-top:20px; border-top:1px solid #030303;">
       <p class="review-heading">รีวิวจากผู้ใช้งานจริง</p>
       <div class="review-stars" style="color: #000000;">5/5 ⭐⭐⭐⭐⭐ (99+ รีวิว)</div>
@@ -1474,20 +1337,27 @@
 <footer class="gs-footer">มึงลองฟัง.❤️‍🔥</footer>
 
 <script>
-  /* ── SLOTS COUNTER (แก้แค่ data-used และ data-total ด้านบน) ── */
+  /* บันทึก mode ปัจจุบันลง localStorage เพื่อให้ index.html อ่านได้ */
   (function() {
-    const wrap = document.getElementById('slots-wrap');
-    if (!wrap) return;
-    const used  = parseInt(wrap.dataset.used);
-    const total = parseInt(wrap.dataset.total);
-    const remaining = total - used;
-    const pct = Math.min(100, Math.round(used / total * 100));
-
-    document.getElementById('slots-bar-fill').style.width = pct + '%';
-    document.getElementById('slots-count-label').textContent = used + '/' + total;
-    document.getElementById('slots-total-label').textContent = total + ' คน';
-    document.getElementById('slots-badge').textContent = '🔥 เหลืออีกแค่ ' + remaining + ' สิทธิ์สุดท้าย!';
+    const link = document.querySelector('a[href*="checkout.html?mode="]');
+    if (link) { const m = link.getAttribute('href').match(/mode=(\w+)/); if (m) localStorage.setItem('plannerMode', m[1]); }
   })();
+
+  /* ── FLASH SALE TIMER (วนลูปทุก 1 ชั่วโมง) ── */
+  function updateTimer() {
+    const now = new Date();
+    const msInHour = 3600000;
+    const diff = msInHour - (now.getTime() % msInHour);
+    const m = Math.floor((diff % msInHour) / 60000);
+    const s = Math.floor((diff % 60000) / 1000);
+    const el = document.getElementById("flash-sale-text");
+    if(el) {
+      el.innerHTML = `แฟลชเซล⚡0 : ${String(m).padStart(2,'0')} : ${String(s).padStart(2,'0')}`;
+    }
+  }
+  setInterval(updateTimer, 1000);
+  updateTimer();
+
 
   /* ── LIVE USERS POPUP (5 SEC INTERVAL) ── */
   function showUserPopup() {
