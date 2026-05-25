@@ -1488,6 +1488,12 @@
         disc.textContent = '-' + pct + '%';
       }
       localStorage.setItem('plannerPrices', JSON.stringify({priceNew: vNew, priceOld: vOld}));
+
+      // sync ราคาในปุ่มกดซื้อให้ตรงกับกล่องราคาเสมอ
+      const priceText = pNew.textContent.trim();
+      document.querySelectorAll('.btn-main-top').forEach(el => {
+        el.textContent = el.textContent.replace(/฿[\d,]+\.-/, priceText);
+      });
     }
 
     const link = document.querySelector('a[href*="checkout.html?mode="]');
