@@ -474,42 +474,55 @@
       </button>
 
    </div></div></div><script>
-  /* ══════════════════════════════════════════════════════════════
-     ⚙️  ตั้งค่าราคาที่นี่ที่เดียว — แก้แค่นี้ ทั้งหน้าอัปเดตเอง
-     ══════════════════════════════════════════════════════════════
-     mode: "flash"    → แสดง countdown แฟลชเซล + ใช้ราคา price_flash
-     mode: "50first"  → ซ่อน countdown + ใช้ราคา price_50first
-     ══════════════════════════════════════════════════════════════ */
-  const _urlMode = new URLSearchParams(window.location.search).get("mode");
-  const CONFIG = {
-    mode:          _urlMode === "50first" ? "50first" : "flash",  // อ่านจาก URL อัตโนมัติ
-    price_flash:   399,      // ราคาแฟลชเซล
-    price_50first: 390,      // ราคาโปร 50 คนแรก
-    original:      1490,     // ราคาเต็ม
-  };
-  /* ════════════════════════════════════════════════════════════ */
+  /* mode อ่านจาก URL (?mode=flash หรือ ?mode=50first) */
+  const MODE = new URLSearchParams(window.location.search).get("mode") === "50first" ? "50first" : "flash";
 
-  function applyConfig() {
-    const price    = CONFIG.mode === "flash" ? CONFIG.price_flash : CONFIG.price_50first;
-    const discount = CONFIG.original - price;
-    document.getElementById("old-price").textContent      = "฿" + CONFIG.original.toLocaleString();
+  function renderPrices(priceNew, priceOld) {
+    const discount = priceOld - priceNew;
+    document.getElementById("old-price").textContent       = "฿" + priceOld.toLocaleString();
     document.getElementById("discount-amount").textContent = "- ฿" + discount.toLocaleString();
-    document.getElementById("final-price").textContent    = "฿" + price.toLocaleString();
+    document.getElementById("final-price").textContent     = "฿" + priceNew.toLocaleString();
     const badge = document.getElementById("flash-sale-text");
-    badge.style.display = CONFIG.mode === "flash" ? "inline-flex" : "none";
+    badge.style.display = MODE === "flash" ? "inline-flex" : "none";
+  }
+
+  async function applyConfig() {
+    // อ่านจาก localStorage ก่อน (เร็ว — planner.html เขียนไว้ตอนโหลด)
+    let priceNew = MODE === "flash" ? 399 : 390, priceOld = 1490;
+    try {
+      const p = JSON.parse(localStorage.getItem('plannerPrices') || '{}');
+      if (p.priceNew) priceNew = p.priceNew;
+      if (p.priceOld) priceOld = p.priceOld;
+    } catch (e) {}
+    renderPrices(priceNew, priceOld);
+
+    // fetch ยืนยันข้อมูลล่าสุดจาก planner.html (HTTP server)
+    try {
+      const res  = await fetch("planner.html?_=" + Date.now());
+      const text = await res.text();
+      const pNMatch = text.match(/class="price-new">฿([\d,]+)/);
+      const pOMatch = text.match(/class="price-old">฿([\d,]+)/);
+      if (pNMatch) priceNew = parseInt(pNMatch[1].replace(/,/g, ''));
+      if (pOMatch) priceOld = parseInt(pOMatch[1].replace(/,/g, ''));
+      localStorage.setItem('plannerPrices', JSON.stringify({priceNew, priceOld}));
+      renderPrices(priceNew, priceOld);
+    } catch (e) {}
   }
   applyConfig();
 
-  /* Flash Sale Timer — จะทำงานเฉพาะ mode: "flash" */
+  /* Flash Sale Timer — ทำงานเฉพาะ mode: "flash" */
+  let timerHours = parseFloat(localStorage.getItem('plannerTimerHours') || '1');
   function updateTimer() {
-    if (CONFIG.mode !== "flash") return;
+    if (MODE !== "flash") return;
     const now = new Date();
-    const msInHour = 3600000;
-    const diff = msInHour - (now.getTime() % msInHour);
-    const m = Math.floor((diff % msInHour) / 60000);
+    const msInterval = timerHours * 3600000;
+    const diff = msInterval - (now.getTime() % msInterval);
+    const h = Math.floor(diff / 3600000);
+    const m = Math.floor((diff % 3600000) / 60000);
     const s = Math.floor((diff % 60000) / 1000);
+    const hStr = h > 0 ? h + " : " : "0 : ";
     const el = document.getElementById("flash-sale-text");
-    if (el) el.innerHTML = `แฟลชเซล⚡0 : ${String(m).padStart(2,'0')} : ${String(s).padStart(2,'0')}`;
+    if (el) el.innerHTML = `แฟลชเซล⚡${hStr}${String(m).padStart(2,'0')} : ${String(s).padStart(2,'0')}`;
   }
   setInterval(updateTimer, 1000);
   updateTimer();

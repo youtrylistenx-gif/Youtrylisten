@@ -287,40 +287,55 @@
   <footer class="gs-footer">มึงลองฟัง.❤️‍🔥</footer>
 
   <script>
-    const INDEX_CONFIG = {
-      price_flash:   399,
-      price_50first: 390,
-      original:      1490,
-    };
-
+    let timerHours = 1;
     function updateTimer() {
       const now = new Date();
-      const msInHour = 3600000;
-      const diff = msInHour - (now.getTime() % msInHour);
-      const m = Math.floor((diff % msInHour) / 60000);
+      const msInterval = timerHours * 3600000;
+      const diff = msInterval - (now.getTime() % msInterval);
+      const h = Math.floor(diff / 3600000);
+      const m = Math.floor((diff % 3600000) / 60000);
       const s = Math.floor((diff % 60000) / 1000);
-      document.getElementById("timer1").innerHTML = `แฟลชเซล⚡0 : ${String(m).padStart(2,'0')} : ${String(s).padStart(2,'0')}`;
+      const hStr = h > 0 ? h + " : " : "0 : ";
+      document.getElementById("timer1").innerHTML = `แฟลชเซล⚡${hStr}${String(m).padStart(2,'0')} : ${String(s).padStart(2,'0')}`;
     }
 
     async function applyPlannerMode() {
       let mode = null;
+      let priceNew = 399, priceOld = 1490;
       let slotsUsed = 45, slotsTotal = 50;
 
-      // ลอง fetch ก่อน (HTTP server) — ได้ข้อมูลล่าสุดเสมอ
+      // ลอง fetch ก่อน (HTTP server) — อ่านราคาตรงจากหน้า planner
       try {
         const res  = await fetch("planner.html?_=" + Date.now());
         const text = await res.text();
-        const mMatch = text.match(/checkout\.html\?mode=(\w+)/);
-        if (mMatch) { mode = mMatch[1]; localStorage.setItem('plannerMode', mode); }
-        const uMatch = text.match(/data-used="(\d+)"/);
-        const tMatch = text.match(/data-total="(\d+)"/);
-        if (uMatch) slotsUsed  = parseInt(uMatch[1]);
-        if (tMatch) slotsTotal = parseInt(tMatch[1]);
-        localStorage.setItem('plannerSlots', JSON.stringify({used: slotsUsed, total: slotsTotal}));
+
+        const mMatch   = text.match(/checkout\.html\?mode=(\w+)/);
+        const pNMatch  = text.match(/class="price-new">฿([\d,]+)/);
+        const pOMatch  = text.match(/class="price-old">฿([\d,]+)/);
+        const uMatch   = text.match(/data-used="(\d+)"/);
+        const tMatch   = text.match(/data-total="(\d+)"/);
+        const thMatch  = text.match(/data-timer-hours="([\d.]+)"/);
+
+        if (mMatch)  { mode     = mMatch[1];  localStorage.setItem('plannerMode', mode); }
+        if (pNMatch) { priceNew = parseInt(pNMatch[1].replace(/,/g, '')); }
+        if (pOMatch) { priceOld = parseInt(pOMatch[1].replace(/,/g, '')); }
+        if (uMatch)  { slotsUsed  = parseInt(uMatch[1]); }
+        if (tMatch)  { slotsTotal = parseInt(tMatch[1]); }
+        if (thMatch) { timerHours = parseFloat(thMatch[1]); localStorage.setItem('plannerTimerHours', timerHours); }
+
+        localStorage.setItem('plannerPrices', JSON.stringify({priceNew, priceOld}));
+        localStorage.setItem('plannerSlots',  JSON.stringify({used: slotsUsed, total: slotsTotal}));
       } catch (e) {}
 
       // fallback: localStorage (file:// protocol)
       if (!mode) mode = localStorage.getItem('plannerMode');
+      const storedHours = localStorage.getItem('plannerTimerHours');
+      if (storedHours) timerHours = parseFloat(storedHours);
+      try {
+        const p = JSON.parse(localStorage.getItem('plannerPrices') || '{}');
+        if (p.priceNew !== undefined) priceNew = p.priceNew;
+        if (p.priceOld !== undefined) priceOld = p.priceOld;
+      } catch (e) {}
       try {
         const s = JSON.parse(localStorage.getItem('plannerSlots') || '{}');
         if (s.used  !== undefined) slotsUsed  = s.used;
@@ -329,10 +344,10 @@
 
       mode = mode || "flash";
 
-      const price    = mode === "50first" ? INDEX_CONFIG.price_50first : INDEX_CONFIG.price_flash;
-      const discount = Math.round((INDEX_CONFIG.original - price) / INDEX_CONFIG.original * 100 * 10) / 10;
+      const discount = Math.round((priceOld - priceNew) / priceOld * 100 * 10) / 10;
 
-      document.getElementById("planner-price").textContent = "฿" + price + ".-";
+      document.getElementById("planner-price").textContent = "฿" + priceNew + ".-";
+      document.getElementById("planner-old").textContent   = "฿" + priceOld.toLocaleString() + ".-";
       document.getElementById("planner-badge").textContent = "-" + discount + "%";
 
       const timer     = document.getElementById("timer1");

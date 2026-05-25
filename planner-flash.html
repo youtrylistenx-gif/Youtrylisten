@@ -1188,9 +1188,9 @@
       </div>
     </div>
 
-    <div class="price-section">
+    <div class="price-section" data-timer-hours="1">
       <div class="price-row">
-        <span class="price-discount">-73.9%</span>
+        <span class="price-discount" id="price-discount">-73.9%</span>
         <span class="price-new">฿399.-</span>
         <span class="price-old">฿1,490.-</span>
         <span class="flash-sale-badge" id="flash-sale-text">⚡ กำลังโหลด...</span>
@@ -1337,10 +1337,27 @@
 <footer class="gs-footer">มึงลองฟัง.❤️‍🔥</footer>
 
 <script>
-  /* บันทึก mode ปัจจุบันลง localStorage เพื่อให้ index.html อ่านได้ */
+  /* คำนวณ % ลด + บันทึก mode, ราคา, slots ลง localStorage */
   (function() {
+    const pNew = document.querySelector('.price-new');
+    const pOld = document.querySelector('.price-old');
+    const disc = document.getElementById('price-discount');
+    if (pNew && pOld && disc) {
+      const vNew = parseInt(pNew.textContent.replace(/[฿,.\-\s]/g, ''));
+      const vOld = parseInt(pOld.textContent.replace(/[฿,.\-\s]/g, ''));
+      if (vOld > 0) {
+        const pct = Math.round((vOld - vNew) / vOld * 100 * 10) / 10;
+        disc.textContent = '-' + pct + '%';
+      }
+      localStorage.setItem('plannerPrices', JSON.stringify({priceNew: vNew, priceOld: vOld}));
+    }
+
     const link = document.querySelector('a[href*="checkout.html?mode="]');
     if (link) { const m = link.getAttribute('href').match(/mode=(\w+)/); if (m) localStorage.setItem('plannerMode', m[1]); }
+    const sw = document.getElementById('slots-wrap');
+    if (sw) localStorage.setItem('plannerSlots', JSON.stringify({used: parseInt(sw.dataset.used)||0, total: parseInt(sw.dataset.total)||50}));
+    const ps = document.querySelector('.price-section');
+    if (ps) localStorage.setItem('plannerTimerHours', ps.dataset.timerHours || '1');
   })();
 
   /* ── FLASH SALE TIMER (วนลูปทุก 1 ชั่วโมง) ── */
