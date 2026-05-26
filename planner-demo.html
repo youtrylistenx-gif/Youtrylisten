@@ -22,30 +22,58 @@
     }
 
     /* ── NAV ── */
-    .nav {
-      height: 56px;
+    .gs-nav {
+      height: 64px;
       background: #fff;
       border-bottom: 1px solid #e0e0e0;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 0 20px;
       position: sticky;
       top: 0;
       z-index: 100;
-      box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
     }
-    .nav-back {
+    .gs-nav-inner {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 24px;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .gs-nav-logo {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
       text-decoration: none;
-      color: #5f6368;
-      font-size: 0.85rem;
-      padding: 6px 14px;
-      border: 1px solid #e0e0e0;
-      border-radius: 20px;
+      color: #202124;
+    }
+    .gs-nav-logo .logo-img {
+      height: 32px;
+      width: 32px;
+      object-fit: contain;
+    }
+    .logo-name {
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: #202124;
       white-space: nowrap;
     }
-    .nav-back:hover { background: #f1f3f4; }
-    .nav-title { font-weight: 700; font-size: 1.05rem; color: #202124; flex: 1; }
+    .btn-back {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      text-decoration: none;
+      color: #5f6368;
+      font-size: 0.88rem;
+      padding: 7px 14px;
+      border: 1px solid #e0e0e0;
+      border-radius: 20px;
+      transition: background 0.15s, color 0.15s;
+      white-space: nowrap;
+    }
+    .btn-back:hover { background: #f1f3f4; color: #202124; }
 
 
     /* ── CARD ── */
@@ -356,9 +384,14 @@
 </head>
 <body>
 
-<nav class="nav">
-  <a href="planner.html" class="nav-back">← กลับ</a>
-  <span class="nav-title">ทดลองใช้ Planner — ชีทจริงๆ</span>
+<nav class="gs-nav">
+  <div class="gs-nav-inner">
+    <a class="gs-nav-logo" href="index.html">
+      <img src="./ภาพ/โลโก้หมากรุก พื้นหลังสีดำ.jpg" alt="Logo" class="logo-img">
+      <span class="logo-name">มึงลองฟัง.❤️‍🔥</span>
+    </a>
+    <a href="planner.html" class="btn-back">← ย้อนกลับ</a>
+  </div>
 </nav>
 
 <div class="card-wrap">
@@ -374,7 +407,7 @@
 
     <div class="card-body">
 
-      <p class="can-title">เวอร์ชั่นทดลองทำนี้อะไรได้บ้าง?</p>
+      <p class="can-title">เวอร์ชั่นทดลองนี้ทำอะไรได้บ้าง?</p>
       <ul class="feat-list">
         <li>
           <div class="feat-icon">✅</div>

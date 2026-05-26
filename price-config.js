@@ -91,8 +91,8 @@ function applyPriceConfig(cfg) {
 
   const timer1   = document.getElementById('timer1');
   const idxSlots = document.getElementById('idx-slots-wrap');
-  if (timer1)   timer1.style.display   = c.isFlash ? '' : 'none';
-  if (idxSlots) idxSlots.style.display = c.isFlash ? 'none' : '';
+  if (timer1)   timer1.style.display   = c.isFlash ? 'block' : 'none';
+  if (idxSlots) idxSlots.style.display = c.isFlash ? 'none' : 'block';
 
   if (!c.isFlash) {
     const fill  = document.getElementById('idx-slots-bar-fill');

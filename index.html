@@ -31,14 +31,19 @@
       height: 64px;
       background: #fff;
       border-bottom: 1px solid #e0e0e0;
-      display: flex;
-      align-items: center;
-      padding: 0 24px;
-      gap: 12px;
       position: sticky;
       top: 0;
       z-index: 100;
       box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    }
+    .gs-nav-inner {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 24px;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      gap: 12px;
     }
     .gs-nav-logo {
       display: flex;
@@ -183,12 +188,14 @@
   <div id="live-users-popup">👁️ มีคนกำลังดูหน้านี้อยู่ <strong id="user-count">20</strong> คน</div>
 
   <nav class="gs-nav">
-    <a class="gs-nav-logo" href="index.html">
-      <img src="./ภาพ/โลโก้หมากรุก พื้นหลังสีดำ.jpg" alt="Logo" class="logo-img">
-      <span class="logo-name">มึงลองฟัง.❤️‍🔥</span>
-    </a>
-    <div class="gs-nav-links">
-      <a href="index.html" class="active">หน้าแรก</a>
+    <div class="gs-nav-inner">
+      <a class="gs-nav-logo" href="index.html">
+        <img src="./ภาพ/โลโก้หมากรุก พื้นหลังสีดำ.jpg" alt="Logo" class="logo-img">
+        <span class="logo-name">มึงลองฟัง.❤️‍🔥</span>
+      </a>
+      <div class="gs-nav-links">
+        <a href="index.html" class="active">หน้าแรก</a>
+      </div>
     </div>
   </nav>
 
