@@ -216,7 +216,7 @@
               <div class="idx-slots-bar-fill" id="idx-slots-bar-fill" style="width:0%"></div>
             </div>
           </div>
-          <div class="product-sold">รับไปใช้งานแล้ว 789 คน</div>
+          <div class="product-sold">รับไปใช้งานแล้ว 793 คน</div>
           <div class="product-stars">⭐5</div>
         </div>
       </a>
@@ -287,90 +287,25 @@
   <footer class="gs-footer">มึงลองฟัง.❤️‍🔥</footer>
 
   <script>
-    let timerHours = 1;
-    function updateTimer() {
-      const now = new Date();
-      const msInterval = timerHours * 3600000;
-      const diff = msInterval - (now.getTime() % msInterval);
-      const h = Math.floor(diff / 3600000);
-      const m = Math.floor((diff % 3600000) / 60000);
-      const s = Math.floor((diff % 60000) / 1000);
-      const hStr = h > 0 ? h + " : " : "0 : ";
-      document.getElementById("timer1").innerHTML = `แฟลชเซล⚡${hStr}${String(m).padStart(2,'0')} : ${String(s).padStart(2,'0')}`;
-    }
+    // อ่านโปรที่บันทึกไว้จาก planner.html (ทำงานได้ทั้ง file:// และ http://)
+    var _savedPromo = localStorage.getItem('ACTIVE_PROMO');
+    if (_savedPromo) var ACTIVE_PROMO = _savedPromo;
+  </script>
+  <script src="price-config.js"></script>
+  <script>
+    applyPriceConfig();
 
-    async function applyPlannerMode() {
-      let mode = null;
-      let priceNew = 399, priceOld = 1490;
-      let slotsUsed = 45, slotsTotal = 50;
-
-      // ลอง fetch ก่อน (HTTP server) — อ่านราคาตรงจากหน้า planner
+    // sync เพิ่มเติมผ่าน fetch (สำหรับ http server — ได้ค่าล่าสุดเสมอ)
+    (async function() {
       try {
-        const res  = await fetch("planner.html?_=" + Date.now());
-        const text = await res.text();
-
-        const mMatch   = text.match(/checkout\.html\?mode=(\w+)/);
-        const pNMatch  = text.match(/class="price-new">฿([\d,]+)/);
-        const pOMatch  = text.match(/class="price-old">฿([\d,]+)/);
-        const uMatch   = text.match(/data-used="(\d+)"/);
-        const tMatch   = text.match(/data-total="(\d+)"/);
-        const thMatch  = text.match(/data-timer-hours="([\d.]+)"/);
-
-        if (mMatch)  { mode     = mMatch[1];  localStorage.setItem('plannerMode', mode); }
-        if (pNMatch) { priceNew = parseInt(pNMatch[1].replace(/,/g, '')); }
-        if (pOMatch) { priceOld = parseInt(pOMatch[1].replace(/,/g, '')); }
-        if (uMatch)  { slotsUsed  = parseInt(uMatch[1]); }
-        if (tMatch)  { slotsTotal = parseInt(tMatch[1]); }
-        if (thMatch) { timerHours = parseFloat(thMatch[1]); localStorage.setItem('plannerTimerHours', timerHours); }
-
-        localStorage.setItem('plannerPrices', JSON.stringify({priceNew, priceOld}));
-        localStorage.setItem('plannerSlots',  JSON.stringify({used: slotsUsed, total: slotsTotal}));
-      } catch (e) {}
-
-      // fallback: localStorage (file:// protocol)
-      if (!mode) mode = localStorage.getItem('plannerMode');
-      const storedHours = localStorage.getItem('plannerTimerHours');
-      if (storedHours) timerHours = parseFloat(storedHours);
-      try {
-        const p = JSON.parse(localStorage.getItem('plannerPrices') || '{}');
-        if (p.priceNew !== undefined) priceNew = p.priceNew;
-        if (p.priceOld !== undefined) priceOld = p.priceOld;
-      } catch (e) {}
-      try {
-        const s = JSON.parse(localStorage.getItem('plannerSlots') || '{}');
-        if (s.used  !== undefined) slotsUsed  = s.used;
-        if (s.total !== undefined) slotsTotal = s.total;
-      } catch (e) {}
-
-      mode = mode || "flash";
-
-      const discount = Math.round((priceOld - priceNew) / priceOld * 100 * 10) / 10;
-
-      document.getElementById("planner-price").textContent = "฿" + priceNew + ".-";
-      document.getElementById("planner-old").textContent   = "฿" + priceOld.toLocaleString() + ".-";
-      document.getElementById("planner-badge").textContent = "-" + discount + "%";
-
-      const timer     = document.getElementById("timer1");
-      const slotsWrap = document.getElementById("idx-slots-wrap");
-
-      if (mode === "flash") {
-        timer.style.display = "";
-        slotsWrap.style.display = "none";
-        updateTimer();
-        setInterval(updateTimer, 1000);
-      } else {
-        timer.style.display = "none";
-        slotsWrap.style.display = "block";
-        const remaining = slotsTotal - slotsUsed;
-        const pct = Math.min(100, Math.round(slotsUsed / slotsTotal * 100));
-        document.getElementById("idx-slots-bar-fill").style.width = pct + "%";
-        document.getElementById("idx-slots-count").textContent    = slotsUsed + "/" + slotsTotal;
-        document.getElementById("idx-slots-total").textContent    = slotsTotal + " คน";
-        document.getElementById("idx-slots-badge").textContent    = "🔥 เหลืออีกแค่ " + remaining + " สิทธิ์สุดท้าย!";
-      }
-    }
-
-    applyPlannerMode();
+        const text = await fetch('planner.html?_=' + Date.now()).then(r => r.text());
+        const m = text.match(/var ACTIVE_PROMO\s*=\s*'(\w+)'/);
+        if (m && PROMOS[m[1]]) {
+          localStorage.setItem('ACTIVE_PROMO', m[1]);
+          applyPriceConfig(PROMOS[m[1]]);
+        }
+      } catch(e) {}
+    })();
 
     /* Live Users Popup */
     function showUserPopup() {

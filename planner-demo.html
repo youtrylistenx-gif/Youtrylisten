@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ทดลองใช้ Planner — มึงลองฟัง.❤️‍🔥</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: "Prompt", Arial, sans-serif;
+      font-size: 16px;
+      color: #202124;
+      background: #f0f2f5;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
+    }
+
+    /* ── NAV ── */
+    .nav {
+      height: 56px;
+      background: #fff;
+      border-bottom: 1px solid #e0e0e0;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 0 20px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+    }
+    .nav-back {
+      text-decoration: none;
+      color: #5f6368;
+      font-size: 0.85rem;
+      padding: 6px 14px;
+      border: 1px solid #e0e0e0;
+      border-radius: 20px;
+      white-space: nowrap;
+    }
+    .nav-back:hover { background: #f1f3f4; }
+    .nav-title { font-weight: 700; font-size: 1.05rem; color: #202124; flex: 1; }
+
+
+    /* ── CARD ── */
+    .card-wrap {
+      max-width: 900px;
+      margin: 40px auto 48px;
+      padding: 0 16px;
+    }
+    .card {
+      background: #fff;
+      border-radius: 16px;
+      border: 1px solid #e0e0e0;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+      overflow: hidden;
+    }
+    .card-top {
+      background: linear-gradient(135deg, #388E3C 0%, #2E7D32 100%);
+      padding: 30px 32px 26px;
+      text-align: center;
+      color: #fff;
+    }
+    .card-icon  { font-size: 2.8rem; margin-bottom: 10px; }
+    .card-title { font-size: 1.45rem; font-weight: 700; margin-bottom: 6px; }
+    .card-sub   { font-size: 1.08rem; color: rgba(255,255,255,0.96); line-height: 1.65; font-weight: 400; }
+
+    .card-body { padding: 26px 30px 30px; }
+
+    /* ── WHAT YOU CAN DO ── */
+    .can-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #202124;
+      text-align: center;
+      margin-bottom: 14px;
+      margin-top: 4px;
+    }
+
+    .feat-list { list-style: none; margin-bottom: 22px; }
+    .feat-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 8px 0;
+      border-bottom: 1px solid #f5f5f5;
+      font-size: 0.88rem;
+      color: #3c4043;
+      line-height: 1.5;
+    }
+    .feat-list li:last-child { border-bottom: none; }
+    .feat-list li strong { font-weight: 600; }
+    .feat-icon {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: #e8f5e9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .feat-icon.red  { background: #ffebee; }
+    .feat-icon.blue { background: #e3f2fd; }
+
+
+    /* ── RESET INFO BOX ── */
+    .reset-box {
+      background: #fce4ec;
+      border: 1.5px solid #f48fb1;
+      border-radius: 12px;
+      padding: 14px 18px;
+      margin-bottom: 22px;
+    }
+    .reset-box-head {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: #880e4f;
+      margin-bottom: 6px;
+    }
+    .reset-box-body {
+      font-size: 0.88rem;
+      color: #5d4037;
+      line-height: 1.7;
+    }
+    .reset-box-body strong { color: #c62828; }
+
+    /* ── NOTE BOX ── */
+    .note-box {
+      background: #fff8e1;
+      border: 1px solid #ffe082;
+      border-radius: 10px;
+      padding: 11px 15px;
+      font-size: 0.88rem;
+      color: #5d4037;
+      margin-bottom: 22px;
+      line-height: 1.65;
+    }
+
+    /* ── BUTTON ── */
+    .btn-start {
+      display: block;
+      width: 100%;
+      background: linear-gradient(135deg, #43A047 0%, #2E7D32 100%);
+      color: #fff;
+      border: none;
+      border-radius: 14px;
+      padding: 18px 29px;
+      font-family: inherit;
+      font-size: 1.2rem;
+      font-weight: 700;
+      cursor: pointer;
+      text-align: center;
+      box-shadow: 0 4px 14px rgba(56,142,60,0.4);
+      transition: transform 0.15s, box-shadow 0.15s;
+      animation: btnFloat 2.4s ease-in-out infinite;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.22);
+      will-change: transform;
+      -webkit-backface-visibility: hidden;
+      backface-visibility: hidden;
+      transform: translateZ(0);
+    }
+    .btn-start:hover  { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(56,142,60,0.5); animation: none; }
+    .btn-start-sub { display: block; font-size: 0.98rem; font-weight: 500; color: rgba(255,255,255,0.96); margin-top: 3px; }
+    @keyframes btnFloat {
+      0%, 100% { transform: translateZ(0) translateY(0); }
+      50%       { transform: translateZ(0) translateY(-4px); }
+    }
+
+    #popup-blocked {
+      display: none;
+      background: #fff3e0;
+      border: 1px solid #ffcc02;
+      border-radius: 10px;
+      padding: 13px 15px;
+      margin-top: 12px;
+      font-size: 0.83rem;
+      color: #e65100;
+      line-height: 1.65;
+    }
+    .open-link { color: #1a73e8; font-weight: 600; text-decoration: none; }
+    .open-link:hover { text-decoration: underline; }
+
+    /* ── BUY BUTTON ── */
+    .btn-buy {
+      display: block;
+      width: 100%;
+      background: linear-gradient(135deg, #f44336 0%, #b71c1c 100%);
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      padding: 0;
+      font-family: inherit;
+      cursor: pointer;
+      text-align: center;
+      text-decoration: none;
+      box-shadow: 0 4px 16px rgba(244,67,54,0.4);
+      margin-top: 12px;
+      overflow: hidden;
+      animation: buyPulse 2.4s ease-in-out infinite;
+    }
+    .btn-buy:hover {
+      transform: scale(1.03);
+      box-shadow: 0 8px 24px rgba(244,67,54,0.55);
+      animation: none;
+    }
+    .btn-buy-top {
+      display: block;
+      padding: 15px 24px 4px;
+      font-size: 1.1rem;
+      font-weight: 800;
+      letter-spacing: 0.01em;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.25);
+    }
+    .btn-buy-sub {
+      display: block;
+      padding: 0 24px 13px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: rgba(255,255,255,0.88);
+    }
+    @keyframes buyPulse {
+      0%, 100% { transform: scale(1); }
+      50%       { transform: scale(1.025); }
+    }
+
+    .divider-or {
+      text-align: center;
+      color: #9aa0a6;
+      font-size: 0.78rem;
+      margin: 16px 0 4px;
+    }
+
+    /* ── PRICE SECTION ── */
+    .price-section {
+      background: #fff;
+      border: 1px solid #e8eaed;
+      border-radius: 12px;
+      padding: 20px;
+      margin-top: 20px;
+    }
+    .price-row {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+      margin-bottom: 10px;
+      flex-wrap: wrap;
+    }
+    .price-discount {
+      font-size: 0.9rem;
+      font-weight: 700;
+      background: #ea4335;
+      color: #fff;
+      padding: 3px 10px;
+      border-radius: 4px;
+    }
+    .price-new {
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: #202124;
+    }
+    .price-old {
+      font-size: 1rem;
+      color: #9aa0a6;
+      text-decoration: line-through;
+    }
+    .flash-sale-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: #fff1f0;
+      color: #d32f2f;
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      border: 1px solid #ffcdd2;
+    }
+    .slots-wrap { margin-top: 12px; }
+    .slots-label {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.85rem;
+      color: #202124;
+      font-weight: 700;
+      margin-bottom: 6px;
+      flex-wrap: wrap;
+      gap: 4px;
+    }
+    .slots-label strong { color: #202124; }
+    .slots-bar {
+      width: 100%;
+      height: 10px;
+      background: #f1f3f4;
+      border-radius: 99px;
+      overflow: hidden;
+    }
+    .slots-bar-fill {
+      height: 100%;
+      width: 90%;
+      background: linear-gradient(90deg, #f44336, #b71c1c);
+      border-radius: 99px;
+      position: relative;
+    }
+    .slots-bar-fill::after {
+      content: "";
+      position: absolute;
+      right: 0; top: 0; bottom: 0;
+      width: 30px;
+      background: rgba(255,255,255,0.25);
+      border-radius: 99px;
+      animation: pulse 1.6s ease-out infinite;
+    }
+    .stats-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.88rem;
+      color: #5f6368;
+      flex-wrap: wrap;
+      margin-top: 12px;
+    }
+    .live-dot {
+      display: inline-block;
+      width: 9px; height: 9px;
+      border-radius: 50%;
+      background: #34a853;
+      position: relative;
+      flex-shrink: 0;
+    }
+    .live-dot::after {
+      content: "";
+      position: absolute;
+      inset: -3px;
+      border-radius: 50%;
+      background: #34a853;
+      opacity: 0.4;
+      animation: pulse 1.6s ease-out infinite;
+    }
+    @keyframes pulse {
+      0%   { transform: scale(1);   opacity: .5; }
+      70%  { transform: scale(2);   opacity: 0;  }
+      100% { transform: scale(2.2); opacity: 0;  }
+    }
+
+  </style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="planner.html" class="nav-back">← กลับ</a>
+  <span class="nav-title">ทดลองใช้ Planner — ชีทจริงๆ</span>
+</nav>
+
+<div class="card-wrap">
+  <div class="card">
+    <div class="card-top">
+      <div class="card-icon">📒</div>
+      <div class="card-title">ทดลองใช้ Planner</div>
+      <div class="card-sub">
+        นี่คือ <strong>ชีทจริง</strong> — ไม่ใช่ภาพตัวอย่าง<br>
+        กรอกได้ แก้ได้ ติ้กได้ เต็มๆ เลย ทุกฟีเจอร์
+      </div>
+    </div>
+
+    <div class="card-body">
+
+      <p class="can-title">เวอร์ชั่นทดลองทำนี้อะไรได้บ้าง?</p>
+      <ul class="feat-list">
+        <li>
+          <div class="feat-icon">✅</div>
+          <span><strong>กรอกงาน / กิจกรรม</strong> — พิมพ์ลงชีทได้เลย เหมือนใช้จริง</span>
+        </li>
+        <li>
+          <div class="feat-icon">☑️</div>
+          <span><strong>ติ้ก Checkbox</strong> — ติ๊กถูก-ยกเลิกได้ กราฟขยับ Real-time</span>
+        </li>
+        <li>
+          <div class="feat-icon">📊</div>
+          <span><strong>ดูกราฟ / สรุปสถิติ</strong> — เปลี่ยนข้อมูลแล้วเห็นผลได้ทันที</span>
+        </li>
+        <li>
+          <div class="feat-icon blue">🔗</div>
+          <span><strong>ลิงก์ระหว่าง Sheet</strong> — คลิกดูได้ทุก Tab เหมือนตัวจริง</span>
+        </li>
+        <li>
+          <div class="feat-icon red">🚫</div>
+          <span><strong>ทำสำเนาไม่ได้</strong> — ชีทนี้ถูกล็อก ไม่อนุญาตให้ก๊อปปี้</span>
+        </li>
+      </ul>
+
+      <!-- RESET NOTICE -->
+      <div class="reset-box">
+        <div class="reset-box-head">⚠️ สำคัญ — ข้อมูลที่ผู้ทดองทุกคนกรอกลงไปในชีทนี้ จะถูกล้างและรีเซ็ตทุก 5 นาที</div>
+        <div class="reset-box-body">
+          ข้อมูลที่คุณกรอกหรือแก้ไข <strong>จะถูกลบอัตโนมัติ</strong> ( อาจจะมีผู้ทดลองหลายคนกรอกข้อมูลลงไปพร้อมกันบางครั้งนะครับ) <br>
+          ชีทจะกลับสู่หน้าเริ่มต้นเสมอ — ดังนั้นไม่ต้องกลัวทำพัง ลองได้เต็มที่เลยครับ!🥰<br>
+          <br>
+          ถ้าชอบ → ซื้อเพื่อรับชีทส่วนตัวของคุณเองที่ไม่รีเซ็ตและใช้งานได้จริง 🙌
+        </div>
+      </div>
+
+      <div class="note-box">
+        📌 ปุ่มด้านล่างจะเปิด Google Sheets ในหน้าต่างใหม่<br>
+        หรือถ้า popup ถูกบล็อก — จะมีลิงก์โดยตรงให้กดนะครับ 🫡
+      </div>
+
+      <button class="btn-start" onclick="openSheet()">
+        🚀 เปิดชีทแล้วลองใช้เลย
+        <span class="btn-start-sub">เปิดใน Google Sheets — ใช้ได้เต็มๆ ทันที</span>
+      </button>
+
+      <div id="popup-blocked">
+        ⚠️ เบราว์เซอร์บล็อก popup — กรุณากด <strong>"Allow"</strong> ในแถบ URL แล้วลองใหม่<br>
+        หรือเปิดโดยตรงที่: <a class="open-link" id="direct-link" href="https://docs.google.com/spreadsheets/d/1KICe7D0sBxFwXW-Akmu9zxtGq1sewFvrmFRS1wQ5VqA/edit?gid=1426201461#gid=1426201461" target="_blank">👉 คลิกเปิด Planner ที่นี่</a>
+      </div>
+
+      <div id="price-buy-wrap">
+
+        <!-- PRICE SECTION -->
+        <div class="price-section">
+          <div class="price-row">
+            <span class="price-discount" data-price-discount>-73.8%</span>
+            <span class="price-new" data-price-new>฿299.-</span>
+            <span class="price-old" data-price-old>฿1,490.-</span>
+            <span class="flash-sale-badge" id="flash-sale-text" data-flash-only style="display:none">⚡ กำลังโหลด...</span>
+          </div>
+          <div class="slots-wrap" data-slots-section>
+            <div class="slots-label">
+              <span>ราคาพิเศษนี้สำหรับ <strong data-slots-total>50 คน</strong>แรกจากคลิปล่าสุดเท่านั้นนะครับ🥰 — รับสิทธิ์แล้ว <span data-slots-count>45/50</span> คน</span>
+              <span class="flash-sale-badge" data-slots-badge>🔥 เหลือเพียงแค่ 5 สิทธิ์สุดท้าย!</span>
+            </div>
+            <div class="slots-bar">
+              <div class="slots-bar-fill" data-slots-bar></div>
+            </div>
+          </div>
+          <div class="stats-row">
+            <a href="planner.html#reviews-section" style="display:inline-flex;align-items:center;gap:5px;text-decoration:none;color:#5f6368;border-bottom:1px dashed #bbb;padding-bottom:1px;">
+              ⭐ 5 (99+ รีวิวจากผู้ใช้จริง) <span style="color:#1a73e8;font-size:0.82rem;font-weight:600;">↓ คลิกเพื่อดูรีวิว</span>
+            </a>
+            <span style="color:#dadce0;">|</span>
+            <span style="display:inline-flex;align-items:center;gap:6px;white-space:nowrap;">
+              <span class="live-dot"></span>
+              <span>จำนวนผู้ใช้งานระบบตอนนี้ 793 คน</span>
+            </span>
+          </div>
+        </div>
+
+        <p class="divider-or">— ลองแล้วชอบ? —</p>
+
+        <a class="btn-buy" href="checkout.html?mode=50first" data-checkout-url>
+          <span class="btn-buy-top">🔥 รับสิทธิ์ราคาพิเศษ <span data-price-new>฿299.-</span> เลย</span>
+          <span class="btn-buy-sub">ชำระเงินแล้วได้รับชีทส่วนตัวทาง Email — ใช้งานได้ทันที ไม่รีเซ็ต</span>
+        </a>
+
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+  var _savedPromo = localStorage.getItem('ACTIVE_PROMO');
+  if (_savedPromo) var ACTIVE_PROMO = _savedPromo;
+</script>
+<script src="price-config.js"></script>
+<script>
+  const SHEET_URL = 'https://docs.google.com/spreadsheets/d/1TiFPtouZvAtnEapPZG_82GQCWoUqsRROiREjtBA_Ixc/edit?gid=1426201461#gid=1426201461';
+
+  // ╔══════════════════════════════════════════════════════════╗
+  // ║  SHOW_PRICE → true = แสดงราคา+ปุ่มซื้อ / false = ซ่อน  ║
+  const SHOW_PRICE = false;
+  // ╚══════════════════════════════════════════════════════════╝
+
+  document.getElementById('price-buy-wrap').style.display = SHOW_PRICE ? '' : 'none';
+
+  applyPriceConfig();
+
+  // sync เพิ่มเติมผ่าน fetch (สำหรับ http server)
+  (async function() {
+    try {
+      const text = await fetch('planner.html?_=' + Date.now()).then(r => r.text());
+      const m = text.match(/var ACTIVE_PROMO\s*=\s*'(\w+)'/);
+      if (m && PROMOS[m[1]]) {
+        localStorage.setItem('ACTIVE_PROMO', m[1]);
+        applyPriceConfig(PROMOS[m[1]]);
+      }
+    } catch(e) {}
+  })();
+
+  function openSheet() {
+    const w    = Math.min(window.screen.width,  1400);
+    const h    = Math.min(window.screen.height, 900);
+    const left = Math.round((window.screen.width  - w) / 2);
+    const top  = Math.round((window.screen.height - h) / 2);
+
+    const popup = window.open(
+      SHEET_URL,
+      'PlannerDemo',
+      `width=${w},height=${h},left=${left},top=${top},resizable=yes,scrollbars=yes`
+    );
+
+    if (!popup || popup.closed) {
+      document.getElementById('popup-blocked').style.display = 'block';
+    }
+  }
+</script>
+</body>
+</html>
