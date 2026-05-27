@@ -1,8 +1,0 @@
-{
-  "permissions": {
-    "allow": [
-      "PowerShell($content = Get-Content \"c:\\\\Users\\\\BadP\\\\Downloads\\\\หน้าเว็บไซต์ใหม่\\\\my-web-project\\\\M1.html\" -Raw; Write-Output \"Total chars: $\\($content.Length\\)\"; $lines = $content -split \"`n\"; Write-Output \"Lines: $\\($lines.Count\\)\"; Write-Output \"--- First 2000 chars ---\"; Write-Output $content.Substring\\(0, [Math]::Min\\(2000, $content.Length\\)\\))",
-      "PowerShell($file = \"c:\\\\Users\\\\BadP\\\\Downloads\\\\หน้าเว็บไซต์ใหม่\\\\my-web-project\\\\M1.html\"; \\(Get-Content $file -ReadCount 100 | Select-Object -First 1\\) | Out-String | Select-String -Pattern \"399|299|1490|price\" -SimpleMatch | Select-Object -First 20)"
-    ]
-  }
-}

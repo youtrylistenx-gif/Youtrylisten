@@ -298,27 +298,7 @@
     var _savedPromo = localStorage.getItem('ACTIVE_PROMO');
     if (_savedPromo) var ACTIVE_PROMO = _savedPromo;
   </script>
-  <script src="price-config.js"></script>
-  <script>
-    applyPriceConfig();
-
-    // sync เพิ่มเติมผ่าน fetch (สำหรับ http server — ได้ค่าล่าสุดเสมอ)
-    (async function() {
-      try {
-        const text = await fetch('planner.html?_=' + Date.now()).then(r => r.text());
-        const m = text.match(/var ACTIVE_PROMO\s*=\s*'(\w+)'/);
-        if (m && PROMOS[m[1]]) {
-          localStorage.setItem('ACTIVE_PROMO', m[1]);
-          applyPriceConfig(PROMOS[m[1]]);
-        }
-      } catch(e) {}
-    })();
-
-  </script>
-  <script>
-    /* ── ป้อปอัพคนดู: true = แสดง | false = ซ่อน ── */
-    var POPUP_ENABLED = true;
-  </script>
-  <script src="live-users.js"></script>
+  <script src="เซ็ตติ้ง.js"></script>
+  <script>applyPriceConfig();</script>
 </body>
 </html>
