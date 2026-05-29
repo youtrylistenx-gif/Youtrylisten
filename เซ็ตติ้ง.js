@@ -29,8 +29,8 @@ var PROMOS = {
   '50first': {
     priceNew:    299,
     priceOld:    1490,
-    slotsTotal:  50,
-    slotsUsed:   45,
+    slotsTotal:  10,
+    slotsUsed:   5,
     checkoutUrl: 'checkout.html?mode=50first',
     isFlash:     false,
   },
